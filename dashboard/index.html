@@ -1,0 +1,927 @@
+<title>종로 기재율 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --surface:      #fcfcfb;
+    --plane:        #f7f6f3;
+    --map-bg:       #f1efe9;
+    --ink:          #0b0b0b;
+    --ink-2:        #52514e;
+    --muted:        #898781;
+    --grid:         #e1e0d9;
+    --border:       rgba(11,11,11,0.12);
+    --accent:       #2a78d6;
+    --accent-ink:   #ffffff;
+    --chip-on:      #2a78d6;
+
+    --c-commercial:        #2a78d6;
+    --c-residential:       #eb6834;
+    --c-public_edu:        #1baf7a;
+    --c-religious_cultural:#d99400;
+    --c-industrial:        #e87ba4;
+    --c-unclassified:      #c2c0b6;
+
+    --ramp-a0:#cde2fb; --ramp-a1:#9ec5f4; --ramp-a2:#6da7ec; --ramp-a3:#3987e5;
+    --ramp-a4:#256abf; --ramp-a5:#184f95; --ramp-a6:#0d366b;
+    --ramp-b0:#fde3d6; --ramp-b1:#fbc3aa; --ramp-b2:#f79e77; --ramp-b3:#ef7b4c;
+    --ramp-b4:#d95926; --ramp-b5:#ad4119; --ramp-b6:#7c2d0f;
+    --cell-line: rgba(11,11,11,0.08);
+    --ring:      rgba(11,11,11,0.28);
+    --ring-in:   rgba(11,11,11,0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --surface:   #1a1a19;
+      --plane:     #0d0d0d;
+      --map-bg:    #111110;
+      --ink:       #ffffff;
+      --ink-2:     #c3c2b7;
+      --muted:     #898781;
+      --grid:      #2c2c2a;
+      --border:    rgba(255,255,255,0.14);
+      --accent:    #3987e5;
+      --accent-ink:#ffffff;
+      --chip-on:   #3987e5;
+
+      --c-commercial:        #3987e5;
+      --c-residential:       #e0632c;
+      --c-public_edu:        #1cb87f;
+      --c-religious_cultural:#d39200;
+      --c-industrial:        #d55181;
+      --c-unclassified:      #4e4e48;
+
+      --ramp-a0:#0d366b; --ramp-a1:#184f95; --ramp-a2:#256abf; --ramp-a3:#3987e5;
+      --ramp-a4:#6da7ec; --ramp-a5:#9ec5f4; --ramp-a6:#cde2fb;
+      --ramp-b0:#7c2d0f; --ramp-b1:#ad4119; --ramp-b2:#d95926; --ramp-b3:#ef7b4c;
+      --ramp-b4:#f79e77; --ramp-b5:#fbc3aa; --ramp-b6:#fde3d6;
+      --cell-line: rgba(255,255,255,0.07);
+      --ring:      rgba(255,255,255,0.32);
+      --ring-in:   rgba(255,255,255,0.16);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --surface:   #1a1a19;
+    --plane:     #0d0d0d;
+    --map-bg:    #111110;
+    --ink:       #ffffff;
+    --ink-2:     #c3c2b7;
+    --muted:     #898781;
+    --grid:      #2c2c2a;
+    --border:    rgba(255,255,255,0.14);
+    --accent:    #3987e5;
+    --accent-ink:#ffffff;
+    --chip-on:   #3987e5;
+
+    --c-commercial:        #3987e5;
+    --c-residential:       #e0632c;
+    --c-public_edu:        #1cb87f;
+    --c-religious_cultural:#d39200;
+    --c-industrial:        #d55181;
+    --c-unclassified:      #4e4e48;
+
+    --ramp-a0:#0d366b; --ramp-a1:#184f95; --ramp-a2:#256abf; --ramp-a3:#3987e5;
+    --ramp-a4:#6da7ec; --ramp-a5:#9ec5f4; --ramp-a6:#cde2fb;
+    --ramp-b0:#7c2d0f; --ramp-b1:#ad4119; --ramp-b2:#d95926; --ramp-b3:#ef7b4c;
+    --ramp-b4:#f79e77; --ramp-b5:#fbc3aa; --ramp-b6:#fde3d6;
+    --cell-line: rgba(255,255,255,0.07);
+    --ring:      rgba(255,255,255,0.32);
+    --ring-in:   rgba(255,255,255,0.16);
+  }
+
+  *{ box-sizing:border-box; }
+  [hidden]{ display:none !important; }
+  body{
+    background:var(--plane);
+    color:var(--ink);
+    font-family:"IBM Plex Sans KR", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .page{
+    max-width:1140px;
+    margin:0 auto;
+    padding-inline:24px;
+    padding-block:40px 60px;
+    display:flex; flex-direction:column; gap:36px;
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 10px;
+  }
+  h1{ font-size:clamp(28px,4vw,38px); font-weight:700; line-height:1.18; margin:0 0 12px; letter-spacing:-.01em; text-wrap:balance; }
+  .lede{ font-size:16px; line-height:1.65; color:var(--ink-2); max-width:64ch; margin:0 0 18px; }
+  .lede b{ color:var(--ink); font-weight:600; }
+  .meta-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--ink-2);
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:999px; padding:5px 12px; white-space:nowrap;
+  }
+
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+  .stat{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:20px; display:flex; flex-direction:column; gap:5px;
+  }
+  .stat .label{ font-size:13px; color:var(--ink-2); }
+  .stat .value{ font-size:32px; font-weight:600; letter-spacing:-.01em; line-height:1.1; }
+  .stat .value .unit{ font-size:15px; font-weight:500; color:var(--ink-2); margin-left:2px; }
+  .stat .sub{ font-size:12.5px; color:var(--muted); }
+  .stat.key .value{ color:var(--accent); }
+
+  section{ display:flex; flex-direction:column; gap:14px; }
+  .section-head h2{ font-size:20px; font-weight:600; margin:0 0 4px; }
+  .section-head p{ font-size:14px; line-height:1.6; color:var(--ink-2); margin:0; max-width:70ch; }
+  .section-head p b{ color:var(--ink); font-weight:600; }
+
+  /* map */
+  .map-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .controls{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    padding:14px 16px; border-bottom:1px solid var(--grid);
+  }
+  .ctrl-group{ display:flex; gap:4px; background:var(--plane); border:1px solid var(--border); border-radius:9px; padding:3px; }
+  .ctrl-group button{
+    font-family:inherit; font-size:12.5px; font-weight:500; color:var(--ink-2);
+    background:transparent; border:0; border-radius:6px; padding:6px 11px; cursor:pointer;
+  }
+  .ctrl-group button[aria-pressed="true"]{ background:var(--chip-on); color:var(--accent-ink); }
+  .ctrl-group button:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .ctrl-label{ font-size:12px; color:var(--muted); }
+  .ctrl-spacer{ flex:1 1 auto; }
+  .btn-plain{
+    font-family:inherit; font-size:12.5px; color:var(--ink-2); cursor:pointer;
+    background:var(--plane); border:1px solid var(--border); border-radius:8px; padding:7px 12px;
+  }
+  .btn-plain:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+
+  .map-body{ display:grid; grid-template-columns:minmax(0,1fr) 250px; }
+  @media (max-width:880px){ .map-body{ grid-template-columns:1fr; } }
+  .map-side{
+    border-left:1px solid var(--grid); padding:14px 16px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  @media (max-width:880px){ .map-side{ border-left:0; border-top:1px solid var(--grid); } }
+  .map-wrap{ position:relative; background:var(--map-bg); }
+  .map-wrap canvas{ display:block; width:100%; touch-action:none; cursor:grab; }
+  .map-wrap canvas.dragging{ cursor:grabbing; }
+  .tooltip{
+    position:absolute; pointer-events:none; z-index:3;
+    background:var(--surface); border:1px solid var(--border); border-radius:8px;
+    padding:8px 11px; font-size:12.5px; color:var(--ink); line-height:1.5;
+    box-shadow:0 4px 14px rgba(0,0,0,.14); max-width:230px;
+  }
+  .tooltip .t-sub{ color:var(--ink-2); font-size:11.5px; }
+  .tooltip .t-cat{ display:flex; align-items:center; gap:6px; margin-top:2px; }
+  .scale-note{
+    font-family:"IBM Plex Mono", monospace; font-size:11px; color:var(--muted);
+    display:flex; align-items:center; gap:7px; flex:none;
+  }
+  .scale-bar{ display:block; height:5px; border:1px solid var(--ring); border-top:0; }
+
+  .map-overlay{
+    position:absolute; left:12px; right:12px; bottom:12px; z-index:2; pointer-events:none;
+    background:var(--surface);
+    background:color-mix(in srgb, var(--surface) 88%, transparent);
+    border:1px solid var(--border); border-radius:10px;
+    padding:10px 12px; display:flex; flex-direction:column; gap:7px;
+    backdrop-filter:blur(3px);
+  }
+  .ov-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .ov-title{ font-size:12px; color:var(--ink-2); }
+  .ov-title b{ color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums; }
+  .ov-bar{ display:flex; gap:2px; height:14px; }
+  .ov-bar span{ display:block; border-radius:2px; min-width:2px; }
+  .ov-legend{ display:flex; flex-wrap:wrap; gap:4px 12px; }
+  .ov-item{ display:inline-flex; align-items:center; gap:5px; font-size:11.5px; color:var(--ink-2); }
+  .ov-item i{ width:8px; height:8px; border-radius:50%; display:block; flex:none; }
+  .ov-item b{ color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums; }
+  @media (max-width:560px){ .ov-legend .ov-item:nth-child(n+5){ display:none; } }
+
+  .side-title{ font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:0; }
+  .legend-cats{ display:flex; flex-direction:column; gap:5px; }
+  .legend-chip{
+    display:flex; align-items:center; gap:8px; width:100%; cursor:pointer; text-align:left;
+    background:var(--plane); border:1px solid var(--border); border-radius:8px;
+    padding:7px 10px; font-size:12.5px; color:var(--ink); font-family:inherit;
+  }
+  .legend-chip[aria-pressed="false"]{ opacity:.40; }
+  .legend-chip:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .legend-chip .dot{ width:10px; height:10px; border-radius:50%; flex:none; }
+  .legend-chip .nm{ flex:1 1 auto; }
+  .legend-chip .n{ color:var(--ink-2); font-variant-numeric:tabular-nums; font-size:12px; }
+  .legend-hint{ font-size:12px; line-height:1.55; color:var(--muted); margin:0; }
+
+  .ramp-legend{ display:flex; flex-direction:column; gap:6px; }
+  .ramp-bar{ display:flex; border-radius:4px; overflow:hidden; border:1px solid var(--border); }
+  .ramp-bar span{ flex:1 1 0; height:14px; display:block; }
+  .ramp-ends{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-2); }
+
+  /* insight */
+  .insight-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:12px; }
+  .insight-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:20px; display:flex; gap:14px;
+  }
+  .insight-num{
+    flex:none; width:26px; height:26px; border-radius:50%;
+    background:var(--accent); color:var(--accent-ink);
+    font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center;
+  }
+  .insight-card p{ margin:0; font-size:14px; line-height:1.65; color:var(--ink-2); }
+  .insight-card b{ color:var(--ink); font-weight:600; }
+
+  /* sgis steps */
+  .steps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:12px; }
+  .step{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:18px; display:flex; flex-direction:column; gap:8px;
+  }
+  .step .step-n{
+    font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--accent); letter-spacing:.06em;
+  }
+  .step h3{ font-size:14.5px; font-weight:600; margin:0; }
+  .step p{ margin:0; font-size:13px; line-height:1.6; color:var(--ink-2); }
+  .step .warn{ font-size:12.5px; color:var(--ink-2); border-left:2px solid var(--c-residential); padding-left:9px; }
+
+  /* footer */
+  footer{ border-top:1px solid var(--grid); padding-top:24px; display:flex; flex-direction:column; gap:18px; }
+  footer h4{ font-size:12px; font-weight:600; margin:0 0 8px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+  .code-block{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:13px 15px; font-family:"IBM Plex Mono", monospace; font-size:12.5px;
+    color:var(--ink-2); line-height:1.7; overflow-x:auto; white-space:pre;
+  }
+  .rule-wrap{ overflow-x:auto; }
+  table.rules{ width:100%; border-collapse:collapse; font-size:12.5px; min-width:520px; }
+  table.rules th, table.rules td{ text-align:left; padding:7px 10px; border-bottom:1px solid var(--grid); color:var(--ink-2); vertical-align:top; }
+  table.rules th{ color:var(--muted); font-weight:500; }
+  table.rules td:first-child{ color:var(--ink); font-weight:500; white-space:nowrap; }
+  .foot-line{ font-size:12px; color:var(--muted); line-height:1.7; margin:0; }
+  .foot-line a{ color:var(--muted); }
+
+  .loading{ padding:70px 0; text-align:center; color:var(--muted); font-size:14px; }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+</style>
+
+<div class="page">
+  <header>
+    <p class="eyebrow">Overpass API · OpenStreetMap · 종로 반경 3km</p>
+    <h1>지도로 보는 기재율</h1>
+    <p class="lede">
+      반경 3km 안 건물 <b>19,193동</b>을 한 점씩 찍었다. 회색이 <b>용도 태그가 없는 미분류</b> 건물이다.
+      <b>미분류 끄기</b>를 누르면 지도가 거의 비는데, 구성비를 그리기 전에 기재율부터 확인해야 하는 이유가 그것이다.
+      격자 보기로 바꾸면 기재율이 <b>지역마다 다르다는 것</b>까지 보인다.
+    </p>
+    <div class="meta-row" id="metaRow"></div>
+  </header>
+
+  <div id="app"><div class="loading">건물 데이터를 불러오는 중…</div></div>
+
+  <footer>
+    <div>
+      <h4>수집 쿼리 (Overpass QL)</h4>
+      <div class="code-block">[out:json][timeout:270];
+way(&lt;구역 bbox&gt;)(around:3000,37.5735,126.9788)[building];
+out center;</div>
+      <p class="foot-line" style="margin-top:8px">
+        전체 반경을 한 번에 요청하면 서버가 거부해서 4개 구역으로 나눠 받은 뒤 way id로 중복을 제거했다(19,193동).
+        형상(폴리곤) 대신 중심점을 쓴 이유는 용량과 격자 집계 때문이다.
+      </p>
+    </div>
+    <div class="rule-wrap">
+      <h4>용도 분류 규칙</h4>
+      <table class="rules">
+        <thead><tr><th>카테고리</th><th>1차 판정 (building=*)</th><th>2차 판정 (보조 태그)</th></tr></thead>
+        <tbody id="ruleBody"></tbody>
+      </table>
+    </div>
+    <p class="foot-line">
+      출처: Overpass API (OpenStreetMap), <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">ODbL</a> ·
+      중심 37.5735, 126.9788 · 반경 3,000m · 격자는 중심점 기준 로컬 격자(SGIS의 UTM-K 격자와 원점이 다름) ·
+      상명대학교 스마트도시계획(캡스톤디자인)
+    </p>
+  </footer>
+</div>
+
+<script>
+const CAT_COLOR_VAR = {
+  commercial:'--c-commercial', residential:'--c-residential', public_edu:'--c-public_edu',
+  religious_cultural:'--c-religious_cultural', industrial:'--c-industrial', unclassified:'--c-unclassified'
+};
+const RULE_ROWS = [
+  ['상업·업무','commercial, office, retail, supermarket, kiosk, hotel','shop=*, office=*, amenity=bank·restaurant·cafe·pharmacy 등, tourism=hotel 등'],
+  ['주거','house, residential, apartments, detached, terrace, dormitory 등','—'],
+  ['공공·교육','school, university, hospital, government, public, kindergarten 등','amenity=school·hospital·library·townhall 등, office=government'],
+  ['종교·문화','church, temple, shrine, mosque, museum, theatre 등','amenity=place_of_worship·arts_centre, tourism=museum'],
+  ['공업','industrial, warehouse, factory, manufacture','landuse=industrial, man_made=works'],
+  ['미분류','위 어느 것에도 해당하지 않음 (대부분 building=yes)','—'],
+];
+const fmt = n => n.toLocaleString('ko-KR');
+const cssVar = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+(async function main(){
+  let data;
+  try{
+    const res = await fetch('buildings.json');
+    data = await res.json();
+  }catch(err){
+    document.getElementById('app').innerHTML =
+      `<div class="loading">데이터를 불러오지 못했습니다 (${err}).</div>`;
+    return;
+  }
+
+  const meta = data.meta;
+  const cats = data.categories;
+  const UNCLASSIFIED_IDX = cats.findIndex(c => c.key === 'unclassified');
+  const rows = data.buildings;
+  const N = rows.length;
+
+  // 위경도 -> 중심 기준 로컬 미터 좌표
+  const [lat0, lon0] = meta.center;
+  const S = meta.coord_scale;
+  const M_PER_DEG_LAT = 111320;
+  const M_PER_DEG_LON = 111320 * Math.cos(lat0 * Math.PI / 180);
+
+  const px = new Float32Array(N), py = new Float32Array(N);
+  const pcat = new Uint8Array(N), pname = new Array(N);
+  const counts = new Array(cats.length).fill(0);
+
+  for (let i = 0; i < N; i++){
+    const r = rows[i];
+    px[i] = (r[1] / S - lon0) * M_PER_DEG_LON;
+    py[i] = -(r[0] / S - lat0) * M_PER_DEG_LAT;
+    pcat[i] = r[2];
+    pname[i] = r[3] || null;
+    counts[r[2]]++;
+  }
+
+  const unclassified = counts[UNCLASSIFIED_IDX];
+  const classified = N - unclassified;
+  const fillRate = classified / N * 100;
+  const ranked = cats
+    .map((c, i) => ({ ...c, count: counts[i], idx: i }))
+    .filter(c => c.key !== 'unclassified')
+    .sort((a, b) => b.count - a.count);
+
+  document.getElementById('metaRow').innerHTML = [
+    `좌표 ${lat0}, ${lon0}`, '반경 3,000m', `건물 ${fmt(N)}동`,
+    `OSM 기준시각 ${new Date(meta.timestamp).toLocaleString('ko-KR')}`
+  ].map(t => `<span class="chip">${t}</span>`).join('');
+
+  document.getElementById('ruleBody').innerHTML = RULE_ROWS
+    .map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+  document.getElementById('app').innerHTML = `
+    <section class="stats">
+      <div class="stat">
+        <div class="label">반경 3km 건물</div>
+        <div class="value">${fmt(N)}<span class="unit">동</span></div>
+        <div class="sub">모집단 전체 · building=* way</div>
+      </div>
+      <div class="stat key">
+        <div class="label">기재율 (용도 태그 보유)</div>
+        <div class="value">${fillRate.toFixed(1)}<span class="unit">%</span></div>
+        <div class="sub">${fmt(classified)}동만 용도를 알 수 있음</div>
+      </div>
+      <div class="stat">
+        <div class="label">미분류</div>
+        <div class="value">${fmt(unclassified)}<span class="unit">동</span></div>
+        <div class="sub">${(unclassified / N * 100).toFixed(1)}% · 대부분 building=yes</div>
+      </div>
+      <div class="stat">
+        <div class="label">분류된 건물 1위</div>
+        <div class="value" style="font-size:26px">${ranked[0].name}</div>
+        <div class="sub">${fmt(ranked[0].count)}동 · 2위 ${ranked[1].name} ${fmt(ranked[1].count)}동</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>건물 지도</h2>
+        <p>점 하나가 건물 한 동이다. 동심원은 중심에서 <b>1km·2km·3km</b> 거리이고, 바깥 3km 원이 수집 범위 경계다.
+           드래그로 이동, <b>＋／−</b> 버튼이나 <b>Ctrl(⌘)+휠</b>, 더블클릭으로 확대하고,
+           점 위에 올리면 건물 정보가 뜬다. 지도 아래 막대는 <b>화면에 보이는 범위</b>의 용도 구성비라 지도를 옮기면 같이 바뀐다.
+           격자 보기는 SGIS 격자 통계와 같은 방식으로 이 데이터를 셀 단위로 집계한 것이다.</p>
+      </div>
+      <div class="map-card">
+        <div class="controls">
+          <div class="ctrl-group" id="viewGroup" role="group" aria-label="지도 보기 전환">
+            <button type="button" data-view="dots" aria-pressed="true">건물 용도</button>
+            <button type="button" data-view="fill" aria-pressed="false">격자 기재율</button>
+            <button type="button" data-view="density" aria-pressed="false">격자 건물밀도</button>
+          </div>
+          <span class="ctrl-label" id="cellLabel" hidden>격자</span>
+          <div class="ctrl-group" id="cellGroup" role="group" aria-label="격자 크기" hidden>
+            <button type="button" data-cell="250" aria-pressed="false">250m</button>
+            <button type="button" data-cell="500" aria-pressed="true">500m</button>
+            <button type="button" data-cell="1000" aria-pressed="false">1km</button>
+          </div>
+          <div class="ctrl-spacer"></div>
+          <button type="button" class="btn-plain" id="toggleUnc">미분류 끄기</button>
+          <div class="ctrl-group" role="group" aria-label="확대 축소">
+            <button type="button" id="zoomOut" aria-label="축소">−</button>
+            <button type="button" id="zoomIn" aria-label="확대">＋</button>
+          </div>
+          <button type="button" class="btn-plain" id="resetView">처음 위치</button>
+        </div>
+        <div class="map-body">
+          <div class="map-wrap" id="mapWrap">
+            <canvas id="map"></canvas>
+            <div class="map-overlay">
+              <div class="ov-head">
+                <span class="ov-title">화면 안 건물 <b id="ovCount">—</b>동 구성비</span>
+                <span class="scale-note" id="scaleNote"></span>
+              </div>
+              <div class="ov-bar" id="ovBar"></div>
+              <div class="ov-legend" id="ovLegend"></div>
+            </div>
+          </div>
+          <aside class="map-side">
+            <p class="side-title" id="sideTitle">용도 범례</p>
+            <div class="legend-cats" id="legendCats"></div>
+            <div class="ramp-legend" id="rampLegend" hidden></div>
+            <p class="legend-hint" id="legendHint">범례를 눌러 카테고리를 켜고 끌 수 있다.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>인사이트</h2></div>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-num">1</div>
+          <p>모집단은 반경 3km 안 건물 <b>${fmt(N)}동 전체</b>다. 이 중 <b>${fmt(unclassified)}동(${(unclassified / N * 100).toFixed(1)}%)</b>은
+             용도 태그가 없어, 지도에서 미분류를 끄면 도심 한복판이 텅 빈다.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">2</div>
+          <p>기재율 <b>${fillRate.toFixed(1)}%</b>인 데이터로 구성비를 그리면 <b>표본이 곧 결론</b>이 된다.
+             분류된 ${fmt(classified)}동만 보면 ${ranked[0].name} ${fmt(ranked[0].count)}동이
+             ${ranked[1].name} ${fmt(ranked[1].count)}동보다 많지만, 이는 "도심이라 그렇다"가 아니라
+             <b>태그가 달린 건물만 세었을 때</b>의 결과다.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">3</div>
+          <p>격자 보기에서 보듯 기재율은 <b>지역마다 다르다</b>. 기재율이 낮은 격자의 구성비를 높은 격자와 나란히 비교하면
+             매핑 밀도 차이를 도시 구조 차이로 오독하게 된다. 건축물대장·도시계획현황과 교차검증이 필요한 이유다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>다음 단계 — SGIS 격자 통계 붙이기</h2>
+        <p>이 지도의 격자는 OSM 건물로 직접 집계한 값이다. 같은 격자 크기로 SGIS의 인구·가구·주택 통계를 붙이면
+           "건물 용도 × 인구"를 비교할 수 있다. SGIS는 토큰 기반이라 조회 절차가 아래와 같다.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-n">STEP 01</span>
+          <h3>서비스 신청</h3>
+          <p>sgis.mods.go.kr에서 회원가입한 뒤 오픈API 서비스를 신청한다. 승인에 시간이 걸리므로 미리 신청해 둔다.</p>
+        </div>
+        <div class="step">
+          <span class="step-n">STEP 02</span>
+          <h3>인증키 확인</h3>
+          <p>발급된 서비스 ID와 보안 Key를 확인한다. 두 값은 코드나 화면에 적지 않고 환경변수로만 둔다.</p>
+        </div>
+        <div class="step">
+          <span class="step-n">STEP 03</span>
+          <h3>AccessToken 발급</h3>
+          <p>인증 요청에 두 값을 보내 토큰을 받는다. 유효기간이 4시간이므로 만료되면 같은 절차로 다시 받는다.</p>
+        </div>
+        <div class="step">
+          <span class="step-n">STEP 04</span>
+          <h3>격자 통계 조회</h3>
+          <p>받은 토큰을 붙여 인구·가구·주택 격자 통계를 조회한다. 일일 호출 한도는 없다.</p>
+          <p class="warn">토큰 만료가 실습 중 가장 잦은 실패 원인이다.</p>
+        </div>
+      </div>
+    </section>
+  `;
+
+  /* ---------- 지도 ---------- */
+  const canvas = document.getElementById('map');
+  const wrap = document.getElementById('mapWrap');
+  const ctx = canvas.getContext('2d');
+  const RADIUS_M = meta.radius_m;
+
+  const state = {
+    view: 'dots',
+    cell: 500,
+    showUnclassified: true,
+    visible: new Set(cats.map((_, i) => i)),
+    scale: 1, tx: 0, ty: 0,
+    w: 0, h: 0, fit: 1,
+  };
+
+  const sx = x => x * state.scale + state.tx;
+  const sy = y => y * state.scale + state.ty;
+
+  function resize(){
+    const dpr = window.devicePixelRatio || 1;
+    const w = wrap.clientWidth;
+    const h = Math.max(340, Math.min(Math.round(w * 0.85), 620));
+    state.w = w; state.h = h;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    state.fit = Math.min(w, h) / (RADIUS_M * 2 * 1.06);
+  }
+  function resetView(){
+    state.scale = state.fit;
+    state.tx = state.w / 2;
+    state.ty = state.h / 2;
+  }
+
+  // 그리드 인덱스(호버 탐색용)
+  const HASH = 60;
+  const hash = new Map();
+  for (let i = 0; i < N; i++){
+    const k = Math.floor(px[i] / HASH) + ',' + Math.floor(py[i] / HASH);
+    let arr = hash.get(k);
+    if (!arr) hash.set(k, arr = []);
+    arr.push(i);
+  }
+
+  const cellCache = new Map();
+  function getCells(size){
+    if (cellCache.has(size)) return cellCache.get(size);
+    const map = new Map();
+    for (let i = 0; i < N; i++){
+      const ci = Math.floor(px[i] / size), cj = Math.floor(py[i] / size);
+      const k = ci + ',' + cj;
+      let c = map.get(k);
+      if (!c) map.set(k, c = { ci, cj, total: 0, classified: 0 });
+      c.total++;
+      if (pcat[i] !== UNCLASSIFIED_IDX) c.classified++;
+    }
+    const list = [...map.values()];
+    const out = {
+      list,
+      maxTotal: list.reduce((m, c) => Math.max(m, c.total), 0),
+      minShown: 5,
+    };
+    cellCache.set(size, out);
+    return out;
+  }
+
+  function rampColors(which){
+    const p = which === 'a' ? '--ramp-a' : '--ramp-b';
+    return [0,1,2,3,4,5,6].map(i => cssVar(p + i));
+  }
+  function rampColor(t, colors){
+    const i = Math.max(0, Math.min(colors.length - 1, Math.round(t * (colors.length - 1))));
+    return colors[i];
+  }
+
+  function draw(){
+    const { w, h } = state;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = cssVar('--map-bg');
+    ctx.fillRect(0, 0, w, h);
+
+    if (state.view === 'dots') drawDots();
+    else drawGrid(state.view);
+
+    drawRangeRings();
+
+    // 중심점
+    const cx = sx(0), cy = sy(0);
+    ctx.strokeStyle = cssVar('--ring');
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx - 6, cy); ctx.lineTo(cx + 6, cy);
+    ctx.moveTo(cx, cy - 6); ctx.lineTo(cx, cy + 6);
+    ctx.stroke();
+
+    drawScaleBar();
+    renderOverlay();
+  }
+
+  // 중심에서 1km·2km·3km 동심원 (3km = 수집 반경)
+  const RINGS = [1000, 2000, 3000];
+  function drawRangeRings(){
+    const cx = sx(0), cy = sy(0);
+    ctx.lineWidth = 1;
+    for (const r of RINGS){
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * state.scale, 0, Math.PI * 2);
+      ctx.strokeStyle = cssVar(r === RADIUS_M ? '--ring' : '--ring-in');
+      ctx.stroke();
+    }
+    // 라벨은 데이터 위에, 지도 배경색 테두리를 둘러 링 위에서도 읽히게
+    const a = -Math.PI / 4;
+    ctx.font = '500 11px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = cssVar('--map-bg');
+    ctx.fillStyle = cssVar('--ink-2');
+    for (const r of RINGS){
+      const x = cx + Math.cos(a) * r * state.scale;
+      const y = cy + Math.sin(a) * r * state.scale;
+      if (x < -20 || y < -20 || x > state.w + 20 || y > state.h + 20) continue;
+      const label = (r / 1000) + 'km';
+      ctx.strokeText(label, x, y);
+      ctx.fillText(label, x, y);
+    }
+    ctx.lineWidth = 1;
+  }
+
+  function drawDots(){
+    const r = Math.max(1.1, Math.min(4.5, state.scale * 9));
+    const order = [UNCLASSIFIED_IDX, ...cats.map((_, i) => i).filter(i => i !== UNCLASSIFIED_IDX)];
+    for (const c of order){
+      if (c === UNCLASSIFIED_IDX && !state.showUnclassified) continue;
+      if (!state.visible.has(c)) continue;
+      ctx.fillStyle = cssVar(CAT_COLOR_VAR[cats[c].key]);
+      ctx.beginPath();
+      for (let i = 0; i < N; i++){
+        if (pcat[i] !== c) continue;
+        const X = sx(px[i]), Y = sy(py[i]);
+        if (X < -8 || Y < -8 || X > state.w + 8 || Y > state.h + 8) continue;
+        ctx.moveTo(X + r, Y);
+        ctx.arc(X, Y, r, 0, Math.PI * 2);
+      }
+      ctx.fill();
+    }
+  }
+
+  function drawGrid(mode){
+    const size = state.cell;
+    const { list, maxTotal, minShown } = getCells(size);
+    const colors = rampColors(mode === 'fill' ? 'a' : 'b');
+    const px_ = size * state.scale;
+    ctx.lineWidth = 1;
+    for (const c of list){
+      if (c.total < minShown) continue;
+      const X = sx(c.ci * size), Y = sy(c.cj * size);
+      if (X < -px_ || Y < -px_ || X > state.w || Y > state.h) continue;
+      const t = mode === 'fill'
+        ? c.classified / c.total
+        : Math.sqrt(c.total / maxTotal);
+      ctx.fillStyle = rampColor(t, colors);
+      ctx.fillRect(X, Y, px_, px_);
+      ctx.strokeStyle = cssVar('--cell-line');
+      ctx.strokeRect(X + .5, Y + .5, px_ - 1, px_ - 1);
+    }
+  }
+
+  function drawScaleBar(){
+    const targetPx = 90;
+    const candidates = [50,100,200,250,500,1000,2000];
+    let best = candidates[0];
+    for (const c of candidates) if (Math.abs(c * state.scale - targetPx) < Math.abs(best * state.scale - targetPx)) best = c;
+    scaleNote.innerHTML =
+      `<span class="scale-bar" style="width:${Math.round(best * state.scale)}px"></span>${best >= 1000 ? (best/1000)+'km' : best+'m'}`;
+  }
+
+  // 화면에 보이는 범위의 용도 구성비 (지도를 옮기면 같이 바뀐다)
+  let lastOvKey = '';
+  function renderOverlay(){
+    const x0 = (0 - state.tx) / state.scale, x1 = (state.w - state.tx) / state.scale;
+    const y0 = (0 - state.ty) / state.scale, y1 = (state.h - state.ty) / state.scale;
+    const tally = new Array(cats.length).fill(0);
+    let total = 0;
+    for (let i = 0; i < N; i++){
+      if (px[i] < x0 || px[i] > x1 || py[i] < y0 || py[i] > y1) continue;
+      if (state.view === 'dots'){
+        if (!state.visible.has(pcat[i])) continue;
+        if (pcat[i] === UNCLASSIFIED_IDX && !state.showUnclassified) continue;
+      }
+      tally[pcat[i]]++; total++;
+    }
+    const key = state.view + '|' + tally.join(',');
+    if (key === lastOvKey) return;
+    lastOvKey = key;
+
+    ovCount.textContent = fmt(total);
+    const segs = cats.map((c, i) => ({ c, i, n: tally[i] })).filter(s => s.n > 0);
+    ovBar.innerHTML = segs.map(s =>
+      `<span style="flex:${s.n} 1 0;background:var(${CAT_COLOR_VAR[s.c.key]})"></span>`).join('');
+    ovLegend.innerHTML = segs
+      .slice().sort((a, b) => b.n - a.n)
+      .map(s => `<span class="ov-item"><i style="background:var(${CAT_COLOR_VAR[s.c.key]})"></i>${s.c.name} <b>${(s.n / total * 100).toFixed(1)}%</b></span>`)
+      .join('');
+  }
+
+  /* 상호작용 */
+  let dragging = false, lastX = 0, lastY = 0, moved = false;
+  canvas.addEventListener('pointerdown', e => {
+    dragging = true; moved = false;
+    lastX = e.offsetX; lastY = e.offsetY;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('dragging');
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (dragging){
+      const dx = e.offsetX - lastX, dy = e.offsetY - lastY;
+      if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+      state.tx += dx; state.ty += dy;
+      lastX = e.offsetX; lastY = e.offsetY;
+      hideTooltip();
+      draw();
+    } else {
+      showTooltipAt(e.offsetX, e.offsetY);
+    }
+  });
+  const endDrag = e => {
+    dragging = false;
+    canvas.classList.remove('dragging');
+    if (e && canvas.hasPointerCapture?.(e.pointerId)) canvas.releasePointerCapture(e.pointerId);
+  };
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+  canvas.addEventListener('pointerleave', () => { hideTooltip(); });
+  function zoomAt(factor, ox, oy){
+    const ns = Math.max(state.fit * 0.6, Math.min(state.fit * 60, state.scale * factor));
+    const k = ns / state.scale;
+    state.tx = ox - (ox - state.tx) * k;
+    state.ty = oy - (oy - state.ty) * k;
+    state.scale = ns;
+    hideTooltip();
+    draw();
+  }
+
+  // 휠은 Ctrl/⌘와 함께일 때만 확대 — 그렇지 않으면 페이지 스크롤을 막지 않는다
+  canvas.addEventListener('wheel', e => {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    zoomAt(Math.exp(-e.deltaY * 0.0015), e.offsetX, e.offsetY);
+  }, { passive: false });
+  canvas.addEventListener('dblclick', e => zoomAt(1.8, e.offsetX, e.offsetY));
+  document.getElementById('zoomIn').addEventListener('click', () => zoomAt(1.6, state.w / 2, state.h / 2));
+  document.getElementById('zoomOut').addEventListener('click', () => zoomAt(1 / 1.6, state.w / 2, state.h / 2));
+
+  let tipEl = null;
+  function hideTooltip(){ if (tipEl){ tipEl.remove(); tipEl = null; } }
+  function showTooltip(html, x, y){
+    if (!tipEl){ tipEl = document.createElement('div'); tipEl.className = 'tooltip'; wrap.appendChild(tipEl); }
+    tipEl.innerHTML = html;
+    const tw = tipEl.offsetWidth, th = tipEl.offsetHeight;
+    tipEl.style.left = Math.min(Math.max(6, x + 14), state.w - tw - 6) + 'px';
+    tipEl.style.top = Math.min(Math.max(6, y - th - 12), state.h - th - 6) + 'px';
+  }
+  function showTooltipAt(mx, my){
+    const wx = (mx - state.tx) / state.scale;
+    const wy = (my - state.ty) / state.scale;
+    if (state.view === 'dots'){
+      const rad = 8 / state.scale;
+      let best = -1, bestD = Infinity;
+      const c0 = Math.floor((wx - rad) / HASH), c1 = Math.floor((wx + rad) / HASH);
+      const r0 = Math.floor((wy - rad) / HASH), r1 = Math.floor((wy + rad) / HASH);
+      for (let ci = c0; ci <= c1; ci++) for (let cj = r0; cj <= r1; cj++){
+        const arr = hash.get(ci + ',' + cj);
+        if (!arr) continue;
+        for (const i of arr){
+          if (!state.visible.has(pcat[i])) continue;
+          if (pcat[i] === UNCLASSIFIED_IDX && !state.showUnclassified) continue;
+          const d = (px[i] - wx) ** 2 + (py[i] - wy) ** 2;
+          if (d < bestD){ bestD = d; best = i; }
+        }
+      }
+      if (best >= 0 && Math.sqrt(bestD) <= rad){
+        const cat = cats[pcat[best]];
+        showTooltip(
+          `<div>${pname[best] ? pname[best] : '<span class="t-sub">이름 태그 없음</span>'}</div>
+           <div class="t-cat"><span style="width:9px;height:9px;border-radius:50%;background:${cssVar(CAT_COLOR_VAR[cat.key])};display:inline-block"></span>
+           <span class="t-sub">${cat.name}</span></div>`, mx, my);
+      } else hideTooltip();
+    } else {
+      const size = state.cell;
+      const { list, minShown } = getCells(size);
+      const ci = Math.floor(wx / size), cj = Math.floor(wy / size);
+      const c = list.find(c => c.ci === ci && c.cj === cj);
+      if (c && c.total >= minShown){
+        const rate = c.classified / c.total * 100;
+        showTooltip(
+          `<div><b>${size >= 1000 ? (size/1000) + 'km' : size + 'm'} 격자</b></div>
+           <div class="t-sub">건물 ${fmt(c.total)}동 · 분류 ${fmt(c.classified)}동</div>
+           <div class="t-sub">기재율 ${rate.toFixed(1)}%</div>`, mx, my);
+      } else hideTooltip();
+    }
+  }
+
+  /* 컨트롤 */
+  const legendCats = document.getElementById('legendCats');
+  const rampLegend = document.getElementById('rampLegend');
+  const legendHint = document.getElementById('legendHint');
+  const sideTitle = document.getElementById('sideTitle');
+  const scaleNote = document.getElementById('scaleNote');
+  const ovCount = document.getElementById('ovCount');
+  const ovBar = document.getElementById('ovBar');
+  const ovLegend = document.getElementById('ovLegend');
+  const cellGroup = document.getElementById('cellGroup');
+  const cellLabel = document.getElementById('cellLabel');
+  const toggleUnc = document.getElementById('toggleUnc');
+
+  legendCats.innerHTML = cats.map((c, i) => `
+    <button type="button" class="legend-chip" data-cat="${i}" aria-pressed="true">
+      <span class="dot" style="background:var(${CAT_COLOR_VAR[c.key]})"></span>
+      <span class="nm">${c.name}</span><span class="n">${fmt(counts[i])}</span>
+    </button>`).join('');
+
+  legendCats.addEventListener('click', e => {
+    const btn = e.target.closest('.legend-chip');
+    if (!btn) return;
+    const i = +btn.dataset.cat;
+    if (state.visible.has(i)) state.visible.delete(i); else state.visible.add(i);
+    if (i === UNCLASSIFIED_IDX) syncUncButton(state.visible.has(i));
+    btn.setAttribute('aria-pressed', state.visible.has(i) ? 'true' : 'false');
+    draw();
+  });
+
+  function syncUncButton(on){
+    state.showUnclassified = on;
+    toggleUnc.textContent = on ? '미분류 끄기' : '미분류 켜기';
+  }
+  toggleUnc.addEventListener('click', () => {
+    const next = !state.showUnclassified;
+    syncUncButton(next);
+    if (next) state.visible.add(UNCLASSIFIED_IDX); else state.visible.delete(UNCLASSIFIED_IDX);
+    const chip = legendCats.querySelector(`[data-cat="${UNCLASSIFIED_IDX}"]`);
+    if (chip) chip.setAttribute('aria-pressed', next ? 'true' : 'false');
+    draw();
+  });
+
+  document.getElementById('resetView').addEventListener('click', () => { resetView(); draw(); });
+
+  document.getElementById('viewGroup').addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    state.view = btn.dataset.view;
+    [...e.currentTarget.children].forEach(b =>
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    syncViewUI();
+    hideTooltip();
+    draw();
+  });
+
+  cellGroup.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    state.cell = +btn.dataset.cell;
+    [...cellGroup.children].forEach(b =>
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    hideTooltip();
+    draw();
+  });
+
+  function syncViewUI(){
+    const isGrid = state.view !== 'dots';
+    cellGroup.hidden = !isGrid;
+    cellLabel.hidden = !isGrid;
+    legendCats.hidden = isGrid;
+    toggleUnc.hidden = isGrid;
+    rampLegend.hidden = !isGrid;
+    if (isGrid){
+      const colors = rampColors(state.view === 'fill' ? 'a' : 'b');
+      const ends = state.view === 'fill' ? ['0%', '100%'] : ['적음', '많음'];
+      sideTitle.textContent = state.view === 'fill' ? '격자 기재율' : '격자 건물 수';
+      rampLegend.innerHTML =
+        `<span class="ramp-bar">${colors.map(c => `<span style="background:${c}"></span>`).join('')}</span>
+         <span class="ramp-ends"><span>${ends[0]}</span><span>${ends[1]}</span></span>`;
+      legendHint.textContent = state.view === 'fill'
+        ? '격자 안 건물 중 용도 태그가 있는 비율. 건물 5동 미만 격자는 표본이 작아 그리지 않았다.'
+        : '격자 안 건물 수. 색이 진할수록 건물이 많다. 5동 미만 격자는 그리지 않았다.';
+    } else {
+      sideTitle.textContent = '용도 범례';
+      legendHint.textContent = '범례를 눌러 카테고리를 켜고 끌 수 있다. 회색(미분류)을 끄면 남는 건물이 실제로 용도를 아는 전부다.';
+    }
+  }
+
+  const ro = new ResizeObserver(() => {
+    const prev = { scale: state.scale, fit: state.fit, tx: state.tx, ty: state.ty, w: state.w, h: state.h };
+    resize();
+    if (prev.fit && prev.w){
+      const k = state.fit / prev.fit;
+      state.scale = prev.scale * k;
+      state.tx = state.w / 2 + (prev.tx - prev.w / 2) * k;
+      state.ty = state.h / 2 + (prev.ty - prev.h / 2) * k;
+    }
+    draw();
+  });
+
+  const onThemeChange = () => draw();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', onThemeChange);
+  new MutationObserver(onThemeChange)
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  resize();
+  resetView();
+  syncViewUI();
+  draw();
+  ro.observe(wrap);
+})();
+</script>
