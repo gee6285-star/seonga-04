@@ -7,7 +7,7 @@
   *{ box-sizing:border-box; }
   body{
     font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-    color:#111; background:#fff; font-size:9pt; line-height:1.45; margin:0; zoom:0.86;
+    color:#111; background:#fff; font-size:9pt; line-height:1.45; margin:0; zoom:0.8;
   }
   .mono{ font-family:Consolas,"D2Coding",monospace; }
 
@@ -33,7 +33,7 @@
 
   figure{ margin:0 0 7px; }
   figure img{ width:100%; display:block; border:1px solid #c8cdd6; }
-  figure.shrink img{ width:70%; margin:0 auto; }
+  figure.shrink img{ width:64%; margin:0 auto; }
   figcaption{ font-size:7.8pt; color:#555; margin-top:3px; }
   figcaption b{ color:#111; }
 
@@ -77,8 +77,9 @@
       <td>①</td>
       <td class="l">세 번째 칸에 용적률 카드 —<br>값·단위·출처·조회일 네 칸</td>
       <td class="ok">완료</td>
-      <td class="l"><b>값 250 · 단위 퍼센트 이하(상한) · 출처 「서울특별시 도시계획 조례」 제48조제5호 시행 2026-07-13 ·
-        조회일 2026-09-21</b>. 네 칸을 카드 안에 이름표와 함께 표시했다(아래 갈무리)</td>
+      <td class="l">값 <b>250</b> · 단위 <b>퍼센트 이하(상한)</b> · 출처 <b>「서울특별시 도시계획 조례」</b> ·
+        <b>법령ID 2000719</b>(MST 2149501) · <b>조문번호 제48조제5호</b> · <b>시행일 2026-07-13</b> · <b>조회일 2026-09-21</b>
+        — 일곱 칸을 각각 이름표를 달아 표시했다</td>
     </tr>
     <tr>
       <td>②</td>
@@ -106,10 +107,10 @@
 <h2>① 배포된 팀 화면 — 세 번째 칸</h2>
 <figure class="shrink">
   <img src="3주차_비교과_화면갈무리.png" alt="팀 지표 카드 네 칸. 세 번째 칸이 조례 용적률 250퍼센트 이하">
-  <figcaption>배포 주소에서 열리는 팀 화면. 왼쪽부터 1주차 기온(27.8 °C) · 2주차 건물밀도(673.6 동/km²) ·
-    <b>세 번째 칸이 3주차 조례 용적률 250 퍼센트 이하</b>. 네 번째 칸은 서울도심 해당 여부가
-    규칙 별표 5 <b>도면</b>에만 있어 <span class="wait">조회 대기</span>로 비워 뒀다 —
-    임의 값을 넣지 않는 것이 이 화면의 규칙이다.</figcaption>
+  <figcaption>왼쪽부터 1주차 기온(27.8 °C) · 2주차 건물밀도(673.6 동/km²) · <b>세 번째 칸이 3주차 조례 용적률</b>.
+    조례 카드에는 <b>법령ID · 조문번호 · 시행일 · 조회일</b>이 각각 한 줄씩 들어 있다 —
+    법령ID는 개정돼도 고정이고 MST는 시행일 버전마다 바뀌므로 둘 다 적었다.
+    네 번째 칸은 서울도심 해당 여부가 규칙 별표 5 <b>도면</b>에만 있어 <span class="wait">조회 대기</span>로 비워 뒀다.</figcaption>
 </figure>
 
 <div class="two">
@@ -135,8 +136,8 @@
         <tr><td class="l">계획관리</td><td>40 / 100</td><td>조례 미규정</td><td>—</td></tr>
       </tbody>
     </table>
-    <p class="note">21종 전부와 근거 조문·시행일·조회일은 동봉 CSV에 있다.
-      3주차 본수업에서 수기로 만든 표와 <b>21종 모두 값이 일치</b>했다.</p>
+    <p class="note">CSV는 21종마다 <b>법령ID · 조문번호 · 시행일 · 조회일</b>을 열로 갖는다
+      (영 009419/MST 288857, 조례 2000719/MST 2149501). 3주차 본수업의 수기 표와 <b>21종 모두 값이 일치</b>했다.</p>
   </div>
 </div>
 

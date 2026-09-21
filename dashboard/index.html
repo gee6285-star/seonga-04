@@ -156,7 +156,7 @@
   .card .big .wait{ font-size:19px; font-weight:600; color:var(--muted); line-height:1.2; }
   .card dl{ margin:0; display:flex; flex-direction:column; gap:0; border-top:1px solid var(--border); }
   .card dl > div{
-    display:grid; grid-template-columns:54px 1fr; gap:10px;
+    display:grid; grid-template-columns:64px 1fr; gap:10px;
     padding:6px 0; border-bottom:1px solid var(--border);
   }
   .card dl > div:last-child{ border-bottom:0; }
@@ -320,7 +320,9 @@
     <div class="section-head">
       <h2>팀 지표 카드</h2>
       <p>한 칸은 <b>값 · 단위 · 출처 · 조회일</b> 네 칸으로 이뤄진다. 네 칸이 다 차지 않은 값은 올리지 않고
-        <b>조회 대기로 비워 둔다</b>. 세 번째 칸이 3주차 비교과에서 올린 대상지 시·도 조례의 용적률이다.</p>
+        <b>조회 대기로 비워 둔다</b>. 세 번째 칸이 3주차 비교과에서 올린 대상지 시·도 조례의 용적률이다.
+        법령에서 받은 값은 나중에 같은 조문을 다시 찾을 수 있도록
+        <b>법령ID · 조문번호 · 시행일 · 조회일</b>을 따로 적는다 — 이 넷이 있어야 같은 버전을 다시 열 수 있다.</p>
     </div>
     <div class="cards">
 
@@ -354,10 +356,14 @@
         <dl>
           <div><dt>값</dt><dd><b>250</b></dd></div>
           <div><dt>단위</dt><dd>퍼센트 이하 (상한)</dd></div>
-          <div><dt>출처</dt><dd><b>「서울특별시 도시계획 조례」 제48조제5호</b> · 시행 2026-07-13<br>서울특별시조례 제10139호 · 자치법규ID 2000719 / MST 2149501</dd></div>
-          <div><dt>조회일</dt><dd>2026-09-21 · 국가법령정보 OPEN API <span class="mono">lawService.do?target=ordin</span></dd></div>
+          <div><dt>출처</dt><dd><b>「서울특별시 도시계획 조례」</b><br>서울특별시조례 제10139호</dd></div>
+          <div><dt>법령ID</dt><dd><b class="mono">2000719</b> (자치법규ID)<br><span class="mono">MST 2149501</span> · 시행일 버전 식별자</dd></div>
+          <div><dt>조문번호</dt><dd><b>제48조제5호</b> — 용도지역 안에서의 용적률</dd></div>
+          <div><dt>시행일</dt><dd><b>2026-07-13</b></dd></div>
+          <div><dt>조회일</dt><dd><b>2026-09-21</b> · 국가법령정보 OPEN API <span class="mono">lawService.do?target=ordin</span></dd></div>
         </dl>
-        <p class="foot">제3종일반주거지역 기준. 시행령 제85조제1항제5호의 법정 범위는 100~300%이고, 대상지에 실제로 걸리는 값은 조례가 정한 이 250%다.</p>
+        <p class="foot">제3종일반주거지역 기준. 시행령 제85조제1항제5호의 법정 범위는 100~300%이고, 대상지에 실제로 걸리는 값은 조례가 정한 이 250%다.
+          법령ID는 개정돼도 고정, MST는 시행일 버전마다 바뀐다.</p>
       </article>
 
       <article class="card pending">
@@ -366,7 +372,10 @@
         <dl>
           <div><dt>값</dt><dd>—</dd></div>
           <div><dt>단위</dt><dd>—</dd></div>
-          <div><dt>출처</dt><dd>「서울특별시 도시계획 조례 시행규칙」 제19조 · 별표 5(서울도심 범역 확정 도면)</dd></div>
+          <div><dt>출처</dt><dd>「서울특별시 도시계획 조례 시행규칙」<br>서울특별시규칙 제4669호</dd></div>
+          <div><dt>법령ID</dt><dd><b class="mono">2000769</b> (자치법규ID)<br><span class="mono">MST 1976247</span></dd></div>
+          <div><dt>조문번호</dt><dd><b>제19조</b> · <b>별표 5</b> — 서울도심 범역 확정 도면</dd></div>
+          <div><dt>시행일</dt><dd>2024-10-14</dd></div>
           <div><dt>조회일</dt><dd>2026-09-21 · 별표 5는 도면 첨부파일이라 본문 텍스트 없음</dd></div>
         </dl>
         <p class="foot">서울도심에 해당하면 상업지역 용적률 단서가 걸린다. 도면을 도면으로 확인하기 전까지 임의 값을 넣지 않고 비워 둔다.</p>
