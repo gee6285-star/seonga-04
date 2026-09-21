@@ -133,6 +133,39 @@
   .stat .sub{ font-size:12.5px; color:var(--muted); }
   .stat.key .value{ color:var(--accent); }
 
+  /* 팀 지표 카드 — 한 칸 = 값·단위·출처·조회일 */
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px 16px; display:flex; flex-direction:column; gap:12px;
+  }
+  .card.key{ border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset; }
+  .card.pending{ background:var(--plane); }
+  .card-head{ display:flex; align-items:baseline; gap:8px; }
+  .card-head .slot{
+    font-family:"IBM Plex Mono", monospace; font-size:11px; letter-spacing:.06em;
+    background:var(--plane); border:1px solid var(--border); border-radius:999px;
+    padding:2px 8px; color:var(--ink-2);
+  }
+  .card.key .card-head .slot{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+  .card-head .what{ font-size:13.5px; font-weight:600; color:var(--ink); }
+  .card .big{ display:flex; align-items:baseline; gap:6px; }
+  .card .big .v{ font-size:38px; font-weight:600; line-height:1; letter-spacing:-.02em; }
+  .card.key .big .v{ color:var(--accent); }
+  .card .big .u{ font-size:14px; color:var(--ink-2); }
+  .card .big .wait{ font-size:19px; font-weight:600; color:var(--muted); line-height:1.2; }
+  .card dl{ margin:0; display:flex; flex-direction:column; gap:0; border-top:1px solid var(--border); }
+  .card dl > div{
+    display:grid; grid-template-columns:54px 1fr; gap:10px;
+    padding:6px 0; border-bottom:1px solid var(--border);
+  }
+  .card dl > div:last-child{ border-bottom:0; }
+  .card dt{ font-size:11.5px; color:var(--muted); font-family:"IBM Plex Mono", monospace; letter-spacing:.04em; }
+  .card dd{ margin:0; font-size:12.5px; line-height:1.5; color:var(--ink-2); }
+  .card dd b{ color:var(--ink); font-weight:600; }
+  .card .foot{ margin:0; font-size:11.5px; line-height:1.55; color:var(--muted); }
+  .card .mono{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; }
+
   section{ display:flex; flex-direction:column; gap:14px; }
   .section-head h2{ font-size:20px; font-weight:600; margin:0 0 4px; }
   .section-head p{ font-size:14px; line-height:1.6; color:var(--ink-2); margin:0; max-width:70ch; }
@@ -282,6 +315,65 @@
     </p>
     <div class="meta-row" id="metaRow"></div>
   </header>
+
+  <section>
+    <div class="section-head">
+      <h2>팀 지표 카드</h2>
+      <p>한 칸은 <b>값 · 단위 · 출처 · 조회일</b> 네 칸으로 이뤄진다. 네 칸이 다 차지 않은 값은 올리지 않고
+        <b>조회 대기로 비워 둔다</b>. 세 번째 칸이 3주차 비교과에서 올린 대상지 시·도 조례의 용적률이다.</p>
+    </div>
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-head"><span class="slot">칸 1</span><span class="what">1주차 · 일최고기온</span></div>
+        <div class="big"><span class="v">27.8</span><span class="u">°C</span></div>
+        <dl>
+          <div><dt>값</dt><dd><b>27.8</b></dd></div>
+          <div><dt>단위</dt><dd>°C · 일최고(하루 중 최댓값)</dd></div>
+          <div><dt>출처</dt><dd>Open-Meteo Forecast API <span class="mono">temperature_2m_max</span> · 예보 대상일 2026-09-21</dd></div>
+          <div><dt>조회일</dt><dd>2026-09-21 · curl 직접 호출</dd></div>
+        </dl>
+        <p class="foot">요청 좌표 37.5735/126.9788 → 응답 격자 37.55/127.00(표고 38 m). 지점 실측이 아니라 격자 모델값이다.</p>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><span class="slot">칸 2</span><span class="what">2주차 · 건물밀도</span></div>
+        <div class="big"><span class="v">673.6</span><span class="u">동/km²</span></div>
+        <dl>
+          <div><dt>값</dt><dd><b>673.6</b></dd></div>
+          <div><dt>단위</dt><dd>동/km² · 반경 3 km 원 전체 평균</dd></div>
+          <div><dt>출처</dt><dd>Overpass API(OpenStreetMap, ODbL) <span class="mono">building=* way</span> · 데이터 기준시각 2026-09-14T08:04Z</dd></div>
+          <div><dt>조회일</dt><dd>2026-09-14 · scripts/fetch_overpass_data.sh</dd></div>
+        </dl>
+        <p class="foot">19,047동 ÷ 28.274 km². 링별로는 R1 1,256.1 · R2 930.1 · R3 403.3 동/km²다(out/ring_density_1km.csv).</p>
+      </article>
+
+      <article class="card key">
+        <div class="card-head"><span class="slot">칸 3</span><span class="what">3주차 · 조례 용적률</span></div>
+        <div class="big"><span class="v">250</span><span class="u">퍼센트 이하</span></div>
+        <dl>
+          <div><dt>값</dt><dd><b>250</b></dd></div>
+          <div><dt>단위</dt><dd>퍼센트 이하 (상한)</dd></div>
+          <div><dt>출처</dt><dd><b>「서울특별시 도시계획 조례」 제48조제5호</b> · 시행 2026-07-13<br>서울특별시조례 제10139호 · 자치법규ID 2000719 / MST 2149501</dd></div>
+          <div><dt>조회일</dt><dd>2026-09-21 · 국가법령정보 OPEN API <span class="mono">lawService.do?target=ordin</span></dd></div>
+        </dl>
+        <p class="foot">제3종일반주거지역 기준. 시행령 제85조제1항제5호의 법정 범위는 100~300%이고, 대상지에 실제로 걸리는 값은 조례가 정한 이 250%다.</p>
+      </article>
+
+      <article class="card pending">
+        <div class="card-head"><span class="slot">칸 4</span><span class="what">대상지 용도지역 판정</span></div>
+        <div class="big"><span class="wait">조회 대기</span></div>
+        <dl>
+          <div><dt>값</dt><dd>—</dd></div>
+          <div><dt>단위</dt><dd>—</dd></div>
+          <div><dt>출처</dt><dd>「서울특별시 도시계획 조례 시행규칙」 제19조 · 별표 5(서울도심 범역 확정 도면)</dd></div>
+          <div><dt>조회일</dt><dd>2026-09-21 · 별표 5는 도면 첨부파일이라 본문 텍스트 없음</dd></div>
+        </dl>
+        <p class="foot">서울도심에 해당하면 상업지역 용적률 단서가 걸린다. 도면을 도면으로 확인하기 전까지 임의 값을 넣지 않고 비워 둔다.</p>
+      </article>
+
+    </div>
+  </section>
 
   <div id="app"><div class="loading">건물 데이터를 불러오는 중…</div></div>
 

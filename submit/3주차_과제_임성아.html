@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>3주차 과제 — 대상지 계획단위 가설 + 법령 검증 로그</title>
+<style>
+  @page { size: A4; margin: 14mm 13mm; }
+  *{ box-sizing:border-box; }
+  body{
+    font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    color:#111; background:#fff; font-size:10pt; line-height:1.55; margin:0;
+  }
+  .mono{ font-family:Consolas,"D2Coding",monospace; }
+  .page{ page-break-after:always; }
+  .page:last-child{ page-break-after:auto; }
+
+  header.doc{ border-bottom:2px solid #1b3f78; padding-bottom:9px; margin-bottom:16px; }
+  header.doc h1{ font-size:16pt; margin:0 0 5px; color:#1b3f78; letter-spacing:-.3px; }
+  header.doc .meta{ font-size:9pt; color:#444; }
+  header.doc .repo{
+    margin-top:7px; padding:6px 9px; background:#eef3fa; border-left:3px solid #1b3f78;
+    font-size:9pt;
+  }
+  header.doc .repo b{ color:#1b3f78; }
+
+  h2{
+    font-size:12pt; margin:0 0 4px; color:#1b3f78;
+    border-left:4px solid #1b3f78; padding-left:8px;
+  }
+  h3{ font-size:10pt; margin:12px 0 5px; color:#1b3f78; }
+  .sub{ font-size:9pt; color:#555; margin:0 0 10px; }
+
+  table{ width:100%; border-collapse:collapse; font-size:8.3pt; margin-bottom:8px; }
+  th,td{ border:1px solid #c8cdd6; padding:4px 6px; text-align:center; vertical-align:top; }
+  th{ background:#e8edf5; color:#1b3f78; font-weight:600; }
+  td.l,th.l{ text-align:left; }
+  td.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  tr.dim td{ background:#f7f8fa; color:#666; }
+  tbody tr.grp td{ background:#f3f5f9; font-weight:600; text-align:left; }
+
+  .note{ font-size:8.5pt; color:#444; line-height:1.6; }
+  .note b{ color:#111; }
+  ul.tight{ margin:5px 0 0; padding-left:16px; }
+  ul.tight li{ margin-bottom:3px; font-size:9pt; }
+
+  .src, .hyp, .obs{ break-inside:avoid; page-break-inside:avoid; }
+  h2, h3{ break-after:avoid; page-break-after:avoid; }
+  thead{ display:table-header-group; }
+  tr{ break-inside:avoid; page-break-inside:avoid; }
+
+  .hyp{
+    border:1px solid #1b3f78; background:#f4f7fc; padding:10px 12px; margin-bottom:12px;
+  }
+  .hyp .k{ font-size:8.3pt; color:#1b3f78; font-weight:600; letter-spacing:.5px; margin-bottom:4px; }
+  .hyp .v{ font-size:11pt; font-weight:700; line-height:1.45; }
+
+  .site{ display:flex; gap:0; border:1px solid #c8cdd6; margin-bottom:12px; }
+  .site div{ flex:1 1 0; padding:8px 10px; border-right:1px solid #c8cdd6; }
+  .site div:last-child{ border-right:0; }
+  .site .k{ font-size:8.3pt; color:#666; margin-bottom:3px; }
+  .site .v{ font-size:12pt; font-weight:700; color:#1b3f78; line-height:1.15; }
+  .site .v small{ font-size:8.3pt; font-weight:400; color:#555; }
+
+  .src{ border:1px solid #c8cdd6; padding:9px 11px; font-size:8.5pt; line-height:1.7; margin-top:10px; }
+  .src h3{ font-size:9.5pt; margin:0 0 5px; }
+  .src dt{ float:left; width:96px; color:#555; clear:left; }
+  .src dd{ margin:0 0 2px 96px; }
+
+  .verdict{ font-weight:700; }
+  .v-out{ color:#a3341f; }
+  .v-wait{ color:#9a6b12; }
+  .v-ok{ color:#1b6b34; }
+  .tag{
+    display:inline-block; font-size:7.6pt; padding:1px 5px; border-radius:2px;
+    background:#e8edf5; color:#1b3f78; font-weight:600;
+  }
+</style>
+
+<!-- ===================== PAGE 1 ===================== -->
+<section class="page">
+  <header class="doc">
+    <h1>3주차 과제 — 대상지 계획단위 가설 + 법령 검증 로그</h1>
+    <div class="meta">
+      스마트도시계획(캡스톤디자인) · 임성아 · 대상지 서울 종로구 일대 · 작성일 2026-09-21 · 법령 조회일 2026-09-21
+    </div>
+    <div class="repo">
+      <b>팀 저장소</b> https://github.com/gee6285-star/seonga-04 &nbsp;|&nbsp;
+      <b>동봉 CSV</b> submit/3주차_법령검증로그.csv · submit/3주차_용도지역21종_건폐율용적률.csv
+    </div>
+  </header>
+
+  <h2>① 대상지 계획단위 가설</h2>
+  <p class="sub">중심 · 경계 · 기각조건을 명시하고, 2주차 관측치로 즉시 판정한다</p>
+
+  <div class="hyp">
+    <div class="k">가설 H</div>
+    <div class="v">
+      대상지의 계획 단위는 페리식 근린주구(반경 400m · 초등학교 중심)가 아니라,
+      간선가로로 둘러싸인 가구(街區) 집합을 하나로 묶는 <u>도심형 슈퍼블록 + 지구단위계획 단위</u>이다.
+    </div>
+  </div>
+
+  <div class="site">
+    <div>
+      <div class="k">중심</div>
+      <div class="v">종로구청<br><small>37.5735, 126.9788 — 2주차 데이터셋과 동일 좌표</small></div>
+    </div>
+    <div>
+      <div class="k">1차 검토 경계</div>
+      <div class="v">반경 400m<br><small>페리 근린주구 표준 반경</small></div>
+    </div>
+    <div>
+      <div class="k">제안 경계</div>
+      <div class="v">간선가로 둘레<br><small>종로 · 율곡로 · 삼일대로 · 자하문로</small></div>
+    </div>
+    <div>
+      <div class="k">관측 단위</div>
+      <div class="v">R1 링<br><small>중심 0–1km, 2주차 집계 단위</small></div>
+    </div>
+  </div>
+
+  <h3>관측 근거 — 2주차 저장소 데이터 (out/ring_density_1km.csv)</h3>
+  <table>
+    <thead>
+      <tr><th class="l">지표</th><th>값</th><th class="l">읽는 법</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="l">R1(0–1km) 건물 수</td><td class="num">3,946 동</td><td class="l">중심에서 걸어 닿는 범위의 모집단</td></tr>
+      <tr><td class="l">R1 용도 기재 건물 수</td><td class="num">1,210 동</td><td class="l">용도 태그가 달린 건물만</td></tr>
+      <tr><td class="l">R1 기재율</td><td class="num">30.7 %</td><td class="l">나머지 69.3%는 용도를 알 수 없음</td></tr>
+      <tr><td class="l">R1 상업·업무</td><td class="num">866 동</td><td class="l">기재 건물의 71.6%</td></tr>
+      <tr><td class="l">R1 주거</td><td class="num">257 동</td><td class="l">기재 건물의 21.2%</td></tr>
+      <tr class="grp"><td>전체 건물 대비 주거 비율 = 257 / 3,946</td><td class="num">6.5 %</td><td>근린주구의 전제와 어긋나는 지점</td></tr>
+    </tbody>
+  </table>
+  <p class="note">
+    근린주구는 <b>주거가 지배적이고 초등학교가 중심시설</b>이라는 전제 위에 서 있다.
+    대상지 R1은 기재 건물의 7할이 상업·업무이고 주거는 전체의 6.5%에 그친다.
+    전제가 성립하지 않으므로 반경을 늘려 학교를 억지로 포함시키는 대신, 전제가 달라진 지점을 기록하고 단위를 바꾼다.
+  </p>
+
+  <h3>기각 조건 — 하나라도 충족하면 그 가설을 버린다</h3>
+  <table>
+    <thead>
+      <tr><th style="width:8%">코드</th><th class="l" style="width:26%">대상 가설</th><th class="l">기각 조건</th><th style="width:20%">현재 판정</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>K1</td><td class="l">페리식 근린주구</td>
+        <td class="l">반경 400m 내 초등학교가 1개 미만이거나, R1 주거 건물 비율이 20% 미만일 것</td>
+        <td class="verdict v-out">충족 → 기각<br><small>주거 6.5% &lt; 20%</small></td>
+      </tr>
+      <tr>
+        <td>K2</td><td class="l">도심형 슈퍼블록</td>
+        <td class="l">제안 경계 내부를 관통하는 폭 20m 이상 간선도로가 있을 것 (보차분리가 성립하지 않음)</td>
+        <td class="verdict v-wait">조회 대기<br><small>도로 폭 자료 미확보</small></td>
+      </tr>
+      <tr>
+        <td>K3</td><td class="l">지구단위계획 단위</td>
+        <td class="l">대상 구역이 영 제43조제4항 및 서울시 조례가 정한 지구단위계획구역 지정대상에 해당하지 않을 것</td>
+        <td class="verdict v-wait">조회 대기<br><small>조례 해당 조문 미조회</small></td>
+      </tr>
+      <tr>
+        <td>K4</td><td class="l">위 판정 전체</td>
+        <td class="l">기재율이 개선되어 R1 주거 비율이 20%를 넘을 것 (K1의 근거가 무너짐)</td>
+        <td class="verdict v-wait">재판정 유보<br><small>현재 기재율 30.7%</small></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    <b>현재 판정</b> — K1이 충족되어 근린주구 가설을 기각한다.
+    대체 단위로 슈퍼블록·지구단위계획을 채택하되, K2·K3는 근거를 확보하기 전까지 <b>조회 대기</b>로 남긴다.
+    대체할 중심시설 후보는 초등학교가 아니라 종로구청·탑골공원 등 도심 생활중심이며, 이 역시 다음 주 관측으로 판정한다.
+    <b>빈칸은 실패가 아니라 아직 확인하지 못했다는 표시다.</b>
+  </p>
+</section>
+
+<!-- ===================== PAGE 2 ===================== -->
+<section class="page">
+  <h2>② 법령 검증 로그</h2>
+  <p class="sub">
+    조문 · 시점 · 수치 오류 각 1건 이상 · 원문 / 식별자 / 시행일 / 조회일 네 칸을 모두 채움 ·
+    동봉 원본 submit/3주차_법령검증로그.csv
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:4%">번호</th>
+        <th style="width:7%">오류<br>유형</th>
+        <th style="width:9%">판정</th>
+        <th class="l" style="width:22%">검증 대상 진술</th>
+        <th class="l" style="width:26%">원문</th>
+        <th class="l" style="width:18%">식별자</th>
+        <th style="width:7%">시행일</th>
+        <th style="width:7%">조회일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td><td><span class="tag">조문</span></td>
+        <td class="verdict v-out">실재하지<br>않음</td>
+        <td class="l">입지규제최소구역은 법 제40조의2에 따라 지정하고 제80조의3에 따라 행위제한을 적용한다</td>
+        <td class="l">조문 목록에 <b>“제40조의2 삭제”, “제80조의3 삭제”</b>로 표기되어 있고, 그 자리에 제40조의3(도시혁신구역의 지정 등)·제40조의4(복합용도구역의 지정 등)와 제80조의4·제80조의5가 있음</td>
+        <td class="l">「국토의 계획 및 이용에 관한 법률」<br>제40조의2 · 제80조의3<br><span class="mono">법령ID 009294 / MST 284013</span></td>
+        <td>2026-07-01</td><td>2026-09-21</td>
+      </tr>
+      <tr>
+        <td>2</td><td><span class="tag">시점</span></td>
+        <td class="verdict v-out">시점<br>불일치</td>
+        <td class="l">「국토의 계획 및 이용에 관한 법률」상 용도지구는 10종이다</td>
+        <td class="l">제37조(용도지구의 지정) ① … 1. 경관지구 2. 고도지구 3. 방화지구 4. 방재지구 5. 보호지구 6. 취락지구 7. 개발진흥지구 8. 특정용도제한지구 9. 복합용도지구 10. 그 밖에 대통령령으로 정하는 지구 <span class="mono">&lt;개정 2017. 4. 18.&gt;</span></td>
+        <td class="l">「국토의 계획 및 이용에 관한 법률」<br>제37조제1항<br><span class="mono">법령ID 009294 / MST 284013</span></td>
+        <td>2026-07-01</td><td>2026-09-21</td>
+      </tr>
+      <tr>
+        <td>3</td><td><span class="tag">수치</span></td>
+        <td class="verdict v-out">시점<br>불일치</td>
+        <td class="l">대상지(종로구)의 제3종일반주거지역 용적률 상한은 300%이다</td>
+        <td class="l">제48조(용도지역 안에서의 용적률) 법 제78조제1항ㆍ제2항 및 영 제85조제1항에 따라 용도지역별 용적률은 다음 각 호의 비율 이하로 한다. … <b>5. 제3종일반주거지역: 250퍼센트</b></td>
+        <td class="l">「서울특별시 도시계획 조례」<br>제48조제5호<br><span class="mono">서울특별시조례 제10139호</span></td>
+        <td>2026-07-13</td><td>2026-09-21</td>
+      </tr>
+      <tr>
+        <td>4</td><td><span class="tag">수치</span></td>
+        <td class="verdict v-out">시점<br>불일치</td>
+        <td class="l">서울시 제2종전용주거지역의 건폐율은 시행령과 같은 50%이다</td>
+        <td class="l">제44조(용도지역 안에서의 건폐율) 법 제77조 및 영 제84조제1항에 따라 용도지역별 건폐율은 다음 각 호의 비율 이하로 한다. … <b>2. 제2종전용주거지역: 40퍼센트</b></td>
+        <td class="l">「서울특별시 도시계획 조례」<br>제44조제2호<br><span class="mono">서울특별시조례 제10139호</span></td>
+        <td>2026-07-13</td><td>2026-09-21</td>
+      </tr>
+      <tr>
+        <td>5</td><td><span class="tag">시점</span></td>
+        <td class="verdict v-out">시점<br>불일치</td>
+        <td class="l">「국토의 계획 및 이용에 관한 법률 시행령」의 현행본은 2026-09-08 공포·시행본이다<br><small>(3주차 강의자료 61번 슬라이드 참고문헌 [2])</small></td>
+        <td class="l">국토의 계획 및 이용에 관한 법률 시행령 <b>[시행 2026. 9. 18.] [대통령령 제36587호, 2026. 8. 18., 타법개정]</b></td>
+        <td class="l">「국토의 계획 및 이용에 관한 법률 시행령」<br><span class="mono">MST 288857 / efYd 20260918</span></td>
+        <td>2026-09-18</td><td>2026-09-21</td>
+      </tr>
+      <tr class="dim">
+        <td>6</td><td><span class="tag">수치</span></td>
+        <td class="verdict v-wait">조회 대기</td>
+        <td class="l">대상지(종로구청 일대)는 서울도심에 해당하므로 일반상업지역 용적률 600%가 적용된다</td>
+        <td class="l">제19조(서울도심의 범역 획정 등) … 서울도심의 범역은 한양도성과 그 주변지역을 포함하는 지역으로서 <b>별표 5에서 정한 구역</b>으로 한다</td>
+        <td class="l">「서울특별시 도시계획 조례 시행규칙」<br>제19조<br><span class="mono">서울특별시규칙 제4669호</span></td>
+        <td>2024-10-14</td><td>2026-09-21</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>정정값</h3>
+  <table>
+    <thead><tr><th style="width:5%">번호</th><th class="l">정정값 · 판정 근거</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">도시혁신구역은 제40조의3·제80조의4, 복합용도구역은 제40조의4·제80조의5. 입지규제최소구역 체계는 공간재구조화계획 체계로 재편되어 인용한 두 조문은 현행법에 없음</td></tr>
+      <tr><td>2</td><td class="l">9종(법정 열거). 2017-04-18 개정으로 미관지구는 경관지구로, 보존지구·시설보호지구는 보호지구로 통폐합되고 복합용도지구가 신설됨. 10종 목록은 개정 전 기준</td></tr>
+      <tr><td>3</td><td class="l">250%. 300%는 영 제85조제1항제5호가 정한 법정 범위(100% 이상 300% 이하)의 상한이지 대상지에 실제로 걸리는 값이 아님 — 법은 범위, 조례는 값</td></tr>
+      <tr><td>4</td><td class="l">40%. 조례가 법정 상한 50%보다 10%p 강화해 정한 드문 사례로, 상한을 그대로 옮겨 적으면 틀림</td></tr>
+      <tr><td>5</td><td class="l">조회일 기준 현행본은 시행일 2026-09-18, 대통령령 제36587호. 자료가 틀린 것이 아니라 인용 시점이 다르며, 시점을 적지 않으면 구별할 방법이 없음</td></tr>
+      <tr><td>6</td><td class="l">미정. 범역이 규칙 별표 5(도면)에 위임되어 있고 별표 5를 아직 조회하지 못함. <b>임의의 값을 넣지 않고 빈칸으로 둔다</b></td></tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    조문 1건 · 시점 2건 · 수치 3건(그중 1건은 조회 대기)로 과제 요건인 유형별 1건 이상을 채웠다.
+    판정 유형은 강의자료 32번 슬라이드의 <b>일치 / 시점 불일치 / 실재하지 않음</b> 세 값을 따랐고,
+    오류 유형은 33번 슬라이드의 <b>조문 / 시점 / 수치</b> 세 값을 따랐다. 두 축은 서로 다르므로 함께 적었다.
+  </p>
+</section>
+
+<!-- ===================== PAGE 3 ===================== -->
+<section class="page">
+  <h2>③ 대상지 시·군 조례의 건폐율·용적률 — 용도지역 21종 표</h2>
+  <p class="sub">
+    법정 21종 전부 · 시행령이 정한 범위와 서울시 조례가 정한 값을 나란히 둠 ·
+    동봉 원본 submit/3주차_용도지역21종_건폐율용적률.csv
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:4%">연번</th>
+        <th class="l" style="width:19%">용도지역</th>
+        <th style="width:9%">시행령<br>건폐율 상한</th>
+        <th style="width:12%">시행령<br>용적률 범위</th>
+        <th style="width:9%">서울 조례<br>건폐율</th>
+        <th style="width:9%">서울 조례<br>용적률</th>
+        <th style="width:9%">서울도심<br>단서</th>
+        <th class="l" style="width:29%">비고</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="grp"><td colspan="8">도시지역 — 주거지역</td></tr>
+      <tr><td>1</td><td class="l">제1종전용주거지역</td><td class="num">50%</td><td class="num">50–100%</td><td class="num">50%</td><td class="num">100%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>2</td><td class="l">제2종전용주거지역</td><td class="num">50%</td><td class="num">50–150%</td><td class="num">40%</td><td class="num">120%</td><td>—</td><td class="l">조례가 건폐율을 상한보다 10%p 강화</td></tr>
+      <tr><td>3</td><td class="l">제1종일반주거지역</td><td class="num">60%</td><td class="num">100–200%</td><td class="num">60%</td><td class="num">150%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>4</td><td class="l">제2종일반주거지역</td><td class="num">60%</td><td class="num">100–250%</td><td class="num">60%</td><td class="num">200%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>5</td><td class="l">제3종일반주거지역</td><td class="num">50%</td><td class="num">100–300%</td><td class="num">50%</td><td class="num">250%</td><td>—</td><td class="l">검증 로그 3번 — 상한 300%와 혼동 빈발</td></tr>
+      <tr><td>6</td><td class="l">준주거지역</td><td class="num">70%</td><td class="num">200–500%</td><td class="num">60%</td><td class="num">400%</td><td>—</td><td class="l"></td></tr>
+
+      <tr class="grp"><td colspan="8">도시지역 — 상업지역</td></tr>
+      <tr><td>7</td><td class="l">중심상업지역</td><td class="num">90%</td><td class="num">200–1,500%</td><td class="num">60%</td><td class="num">1,000%</td><td class="num">800%</td><td class="l">서울도심 해당 여부는 검증 로그 6번 — 조회 대기</td></tr>
+      <tr><td>8</td><td class="l">일반상업지역</td><td class="num">80%</td><td class="num">200–1,300%</td><td class="num">60%</td><td class="num">800%</td><td class="num">600%</td><td class="l">〃</td></tr>
+      <tr><td>9</td><td class="l">근린상업지역</td><td class="num">70%</td><td class="num">200–900%</td><td class="num">60%</td><td class="num">600%</td><td class="num">500%</td><td class="l">〃</td></tr>
+      <tr><td>10</td><td class="l">유통상업지역</td><td class="num">80%</td><td class="num">200–1,100%</td><td class="num">60%</td><td class="num">600%</td><td class="num">500%</td><td class="l">〃</td></tr>
+
+      <tr class="grp"><td colspan="8">도시지역 — 공업지역</td></tr>
+      <tr><td>11</td><td class="l">전용공업지역</td><td class="num">70%</td><td class="num">150–300%</td><td class="num">60%</td><td class="num">200%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>12</td><td class="l">일반공업지역</td><td class="num">70%</td><td class="num">150–350%</td><td class="num">60%</td><td class="num">200%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>13</td><td class="l">준공업지역</td><td class="num">70%</td><td class="num">150–400%</td><td class="num">60%</td><td class="num">400%</td><td>—</td><td class="l"></td></tr>
+
+      <tr class="grp"><td colspan="8">도시지역 — 녹지지역</td></tr>
+      <tr><td>14</td><td class="l">보전녹지지역</td><td class="num">20%</td><td class="num">50–80%</td><td class="num">20%</td><td class="num">50%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>15</td><td class="l">생산녹지지역</td><td class="num">20%</td><td class="num">50–100%</td><td class="num">20%</td><td class="num">50%</td><td>—</td><td class="l"></td></tr>
+      <tr><td>16</td><td class="l">자연녹지지역</td><td class="num">20%</td><td class="num">50–100%</td><td class="num">20%</td><td class="num">50%</td><td>—</td><td class="l"></td></tr>
+
+      <tr class="grp"><td colspan="8">관리지역 · 농림지역 · 자연환경보전지역</td></tr>
+      <tr class="dim"><td>17</td><td class="l">보전관리지역</td><td class="num">20%</td><td class="num">50–80%</td><td>—</td><td>—</td><td>—</td><td class="l">서울특별시 내 미지정 — 조례에 규정 없음</td></tr>
+      <tr class="dim"><td>18</td><td class="l">생산관리지역</td><td class="num">20%</td><td class="num">50–80%</td><td>—</td><td>—</td><td>—</td><td class="l">〃</td></tr>
+      <tr class="dim"><td>19</td><td class="l">계획관리지역</td><td class="num">40%</td><td class="num">50–100%</td><td>—</td><td>—</td><td>—</td><td class="l">〃</td></tr>
+      <tr class="dim"><td>20</td><td class="l">농림지역</td><td class="num">20%</td><td class="num">50–80%</td><td>—</td><td>—</td><td>—</td><td class="l">〃</td></tr>
+      <tr class="dim"><td>21</td><td class="l">자연환경보전지역</td><td class="num">20%</td><td class="num">50–80%</td><td>—</td><td>—</td><td>—</td><td class="l">〃</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    <b>법은 범위, 조례는 값.</b> 시행령 제84조·제85조는 21종 전부에 대해 범위를 정하지만,
+    서울특별시 조례는 도시지역 16종에만 값을 정한다. 나머지 5종이 비어 있는 것은 누락이 아니라
+    서울시 관할구역에 그 용도지역이 지정되어 있지 않기 때문이며, 그 사유를 비고에 적어 빈칸과 구별했다.
+    대상지 설계조건으로 쓸 값은 시행령 열이 아니라 <b>서울 조례 열</b>이다.
+  </p>
+
+  <div class="src">
+    <h3>근거 · 식별자 · 시점</h3>
+    <dl>
+      <dt>법률</dt>
+      <dd>「국토의 계획 및 이용에 관한 법률」 제37조·제77조·제78조 — 법령ID 009294 / MST 284013 / [시행 2026. 7. 1.] [법률 제21447호, 2026. 3. 5., 타법개정]</dd>
+      <dt>시행령</dt>
+      <dd>「국토의 계획 및 이용에 관한 법률 시행령」 제84조제1항·제85조제1항 — MST 288857 / [시행 2026. 9. 18.] [대통령령 제36587호, 2026. 8. 18., 타법개정]</dd>
+      <dt>조례</dt>
+      <dd>「서울특별시 도시계획 조례」 제44조·제48조 — [시행 2026. 7. 13.] [서울특별시조례 제10139호, 2026. 7. 13., 일부개정]</dd>
+      <dt>규칙</dt>
+      <dd>「서울특별시 도시계획 조례 시행규칙」 제19조 — [시행 2024. 10. 14.] [서울특별시규칙 제4669호, 2024. 10. 14., 전부개정] · 별표 5 미조회</dd>
+      <dt>관측 데이터</dt>
+      <dd>본 저장소 out/ring_density_1km.csv (Overpass API / OpenStreetMap, ODbL) — 중심 37.5735, 126.9788</dd>
+      <dt>조회 경로</dt>
+      <dd>국가법령정보센터 https://www.law.go.kr 본문 열람 · 조회일 2026-09-21</dd>
+    </dl>
+  </div>
+</section>
+</html>

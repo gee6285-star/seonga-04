@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>비교과 실습 — MCP로 조문 받기: 네 단계 실행 기록</title>
+<style>
+  @page { size: A4; margin: 14mm 13mm; }
+  *{ box-sizing:border-box; }
+  body{
+    font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    color:#111; background:#fff; font-size:10pt; line-height:1.55; margin:0;
+  }
+  .mono{ font-family:Consolas,"D2Coding",monospace; }
+  .page{ page-break-after:always; }
+  .page:last-child{ page-break-after:auto; }
+
+  header.doc{ border-bottom:2px solid #1b3f78; padding-bottom:9px; margin-bottom:16px; }
+  header.doc h1{ font-size:16pt; margin:0 0 5px; color:#1b3f78; letter-spacing:-.3px; }
+  header.doc .meta{ font-size:9pt; color:#444; }
+  header.doc .repo{
+    margin-top:7px; padding:6px 9px; background:#eef3fa; border-left:3px solid #1b3f78;
+    font-size:9pt;
+  }
+  header.doc .repo b{ color:#1b3f78; }
+
+  h2{
+    font-size:12pt; margin:0 0 4px; color:#1b3f78;
+    border-left:4px solid #1b3f78; padding-left:8px;
+  }
+  h3{ font-size:10pt; margin:12px 0 5px; color:#1b3f78; }
+  .sub{ font-size:9pt; color:#555; margin:0 0 10px; }
+
+  table{ width:100%; border-collapse:collapse; font-size:8.3pt; margin-bottom:8px; }
+  th,td{ border:1px solid #c8cdd6; padding:4px 6px; text-align:center; vertical-align:top; }
+  th{ background:#e8edf5; color:#1b3f78; font-weight:600; }
+  td.l,th.l{ text-align:left; }
+  td.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  tr.dim td{ background:#f7f8fa; color:#666; }
+  tbody tr.grp td{ background:#f3f5f9; font-weight:600; text-align:left; }
+
+  table.tight th, table.tight td{ padding:3px 5px; }
+  .note{ font-size:8.5pt; color:#444; line-height:1.6; }
+  .note b{ color:#111; }
+  ul.tight{ margin:5px 0 0; padding-left:16px; }
+  ul.tight li{ margin-bottom:3px; font-size:9pt; }
+
+  .src, .hyp, .obs, .steps, .quote{ break-inside:avoid; page-break-inside:avoid; }
+  h2, h3{ break-after:avoid; page-break-after:avoid; }
+  thead{ display:table-header-group; }
+  tr{ break-inside:avoid; page-break-inside:avoid; }
+
+  .hyp{
+    border:1px solid #1b3f78; background:#f4f7fc; padding:10px 12px; margin-bottom:12px;
+  }
+  .hyp .k{ font-size:8.3pt; color:#1b3f78; font-weight:600; letter-spacing:.5px; margin-bottom:4px; }
+  .hyp .v{ font-size:11pt; font-weight:700; line-height:1.45; }
+
+  .site{ display:flex; gap:0; border:1px solid #c8cdd6; margin-bottom:12px; }
+  .site div{ flex:1 1 0; padding:8px 10px; border-right:1px solid #c8cdd6; }
+  .site div:last-child{ border-right:0; }
+  .site .k{ font-size:8.3pt; color:#666; margin-bottom:3px; }
+  .site .v{ font-size:12pt; font-weight:700; color:#1b3f78; line-height:1.15; }
+  .site .v small{ font-size:8.3pt; font-weight:400; color:#555; }
+
+  .src{ border:1px solid #c8cdd6; padding:9px 11px; font-size:8.5pt; line-height:1.7; margin-top:10px; }
+  .src h3{ font-size:9.5pt; margin:0 0 5px; }
+  .src dt{ float:left; width:96px; color:#555; clear:left; }
+  .src dd{ margin:0 0 2px 96px; }
+
+  .verdict{ font-weight:700; }
+  .v-out{ color:#a3341f; }
+  .v-wait{ color:#9a6b12; }
+  .v-ok{ color:#1b6b34; }
+  .tag{
+    display:inline-block; font-size:7.6pt; padding:1px 5px; border-radius:2px;
+    background:#e8edf5; color:#1b3f78; font-weight:600;
+  }
+
+  .quote{
+    border:1px solid #c8cdd6; border-left:3px solid #1b3f78; background:#fbfcfe;
+    padding:8px 11px; font-size:8.6pt; line-height:1.65; margin:8px 0 6px;
+  }
+  .quote .cap{ font-size:8pt; color:#1b3f78; font-weight:600; margin-bottom:4px; }
+  .warn{
+    border:1px solid #d9c08a; background:#fdf8ec; padding:8px 11px;
+    font-size:8.6pt; line-height:1.65; margin:8px 0;
+  }
+  .warn b{ color:#8a6413; }
+  .cmd{
+    background:#f4f5f7; border:1px solid #d7dae0; padding:7px 9px;
+    font-family:Consolas,"D2Coding",monospace; font-size:8pt; line-height:1.6;
+    margin:6px 0 8px; white-space:pre-wrap; word-break:break-all;
+  }
+</style>
+
+<!-- ===================== PAGE 1 ===================== -->
+<section class="page">
+  <header class="doc">
+    <h1>비교과 실습 — MCP로 조문 받기: 네 단계 실행 기록</h1>
+    <div class="meta">
+      스마트도시계획(캡스톤디자인) · 임성아 · 대상지 서울 종로구 일대 · 작성일 2026-09-21 · <b>법령 조회일 2026-09-21</b>
+    </div>
+    <div class="repo">
+      <b>팀 저장소</b> https://github.com/gee6285-star/seonga-04 &nbsp;|&nbsp;
+      <b>동봉 CSV</b> submit/비교과_MCP_법령식별자대장.csv · submit/비교과_MCP_조문표.csv
+    </div>
+  </header>
+
+  <h2>① 네 단계를 그대로 실행했다</h2>
+  <p class="sub">법령 찾기 → 식별자 확인 → 조문 조회 → 시점 기록. 각 단계에서 무엇을 받았고 무엇을 남겼는가</p>
+
+  <table class="tight">
+    <thead>
+      <tr>
+        <th style="width:52px">단계</th>
+        <th class="l" style="width:150px">한 일</th>
+        <th class="l">호출 (국가법령정보 OPEN API)</th>
+        <th class="l" style="width:200px">받은 값 · 남긴 값</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>01</b></td>
+        <td class="l">법령 찾기<br><span class="note">제명으로 검색</span></td>
+        <td class="l mono" style="font-size:7.6pt">lawSearch.do?target=law&amp;search=1<br>&amp;query=국토의 계획 및 이용에 관한 법률</td>
+        <td class="l">검색 결과 3건(법률·시행령·시행규칙) 중 <b>제명 완전일치</b> 1건 선택.
+          자치법규는 25개 자치구가 같은 제명을 써서 완전일치가 꼭 필요하다</td>
+      </tr>
+      <tr>
+        <td><b>02</b></td>
+        <td class="l">식별자 확인<br><span class="note">버전 고정</span></td>
+        <td class="l mono" style="font-size:7.6pt">응답의 법령ID · 법령일련번호(MST)<br>· 시행일자 · 소관부처명</td>
+        <td class="l">법령ID <b>009294</b> / MST <b>284013</b> / 시행 <b>2026-07-01</b> / 국토교통부.
+          강의자료 12쪽 예시값과 일치한다</td>
+      </tr>
+      <tr>
+        <td><b>03</b></td>
+        <td class="l">조문 조회<br><span class="note">MST로 본문 호출</span></td>
+        <td class="l mono" style="font-size:7.6pt">lawService.do?target=law&amp;MST=284013<br>자치법규는 target=ordin</td>
+        <td class="l">4개 법령 <b>16개 조문(별표 1건 포함) · 67개 조·항</b>을 조·항 단위로 분해해 CSV로 저장</td>
+      </tr>
+      <tr>
+        <td><b>04</b></td>
+        <td class="l">시점 기록<br><span class="note">시행일 + 조회일</span></td>
+        <td class="l mono" style="font-size:7.6pt">시행일자(응답) + 조회일(실행일)<br>→ 출처표기 자동 생성</td>
+        <td class="l">67행 <b>모든 행</b>에 법령ID·MST·시행일·조회일과 인용문구를 붙였다. 원본 XML은 out/law/raw/에 보관</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <b>도구에 대한 정직한 기재.</b> 이번 세션에는 법령 MCP 서버가 연결돼 있지 않아, MCP 서버가 안쪽에서 부르는 것과
+    <b>같은 국가법령정보 OPEN API 엔드포인트</b>를 저장소의 스크립트(<span class="mono">scripts/fetch_law_articles.ps1</span>)로 직접 호출했다.
+    부르는 방법이 다를 뿐 받는 값(법령ID·MST·조문 원문)과 네 단계의 순서는 같다. 응답 원본을 남겨 두어 제3자가 같은 값을 재확인할 수 있다.
+  </div>
+
+  <h2 style="margin-top:14px">② 법령 식별자 대장</h2>
+  <p class="sub">2단계·4단계의 산출물. 나중에 같은 조문을 다시 찾으려면 이 네 값(ID·MST·시행일·조회일)이 필요하다</p>
+
+  <table class="tight">
+    <thead>
+      <tr>
+        <th style="width:52px">구분</th>
+        <th class="l">법령명</th>
+        <th style="width:60px">법령ID</th>
+        <th style="width:60px">MST</th>
+        <th style="width:110px">공포</th>
+        <th style="width:66px">시행일</th>
+        <th style="width:66px">조회일</th>
+        <th style="width:48px">수집<br>조문</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>법률</td>
+        <td class="l">국토의 계획 및 이용에 관한 법률</td>
+        <td class="mono">009294</td><td class="mono">284013</td>
+        <td>법률 제21447호<br><span class="note">2026-03-05 타법개정</span></td>
+        <td><b>2026-07-01</b></td><td>2026-09-21</td><td class="num">9</td>
+      </tr>
+      <tr>
+        <td>대통령령</td>
+        <td class="l">국토의 계획 및 이용에 관한 법률 시행령</td>
+        <td class="mono">009419</td><td class="mono">288857</td>
+        <td>대통령령 제36587호<br><span class="note">2026-08-18 타법개정</span></td>
+        <td><b>2026-09-18</b></td><td>2026-09-21</td><td class="num">3</td>
+      </tr>
+      <tr>
+        <td>조례</td>
+        <td class="l">서울특별시 도시계획 조례</td>
+        <td class="mono">2000719</td><td class="mono">2149501</td>
+        <td>서울특별시조례 제10139호<br><span class="note">2026-07-13 일부개정</span></td>
+        <td><b>2026-07-13</b></td><td>2026-09-21</td><td class="num">2</td>
+      </tr>
+      <tr>
+        <td>규칙</td>
+        <td class="l">서울특별시 도시계획 조례 시행규칙</td>
+        <td class="mono">2000769</td><td class="mono">1976247</td>
+        <td>서울특별시규칙 제4669호<br><span class="note">2024-10-14 일부개정</span></td>
+        <td><b>2024-10-14</b></td><td>2026-09-21</td><td class="num">2</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">
+    <b>법령ID</b>는 개정돼도 고정, <b>MST</b>는 시행일 버전마다 바뀌므로 인용에는 둘 다 적는다.
+    자치법규는 필드 이름이 자치법규ID·자치법규일련번호로 다를 뿐 역할은 같다. 전체 12개 열은 동봉 CSV에 있다.
+  </p>
+</section>
+
+<!-- ===================== PAGE 2 ===================== -->
+<section class="page">
+  <h2>③ 조문 조회 결과</h2>
+  <p class="sub">대상지(종로) 판단에 실제로 쓰이는 조문만 골랐다 · 16개 조문 / 67개 조·항</p>
+
+  <table class="tight">
+    <thead>
+      <tr>
+        <th style="width:56px">구분</th>
+        <th style="width:66px">조</th>
+        <th class="l" style="width:190px">조문제목</th>
+        <th style="width:38px">항</th>
+        <th class="l">이 조문을 받은 이유</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="grp"><td colspan="5">국토의 계획 및 이용에 관한 법률 (법령ID 009294 / MST 284013 / 시행 2026-07-01)</td></tr>
+      <tr><td>법률</td><td>제36조</td><td class="l">용도지역의 지정</td><td class="num">2</td><td class="l">용도지역 4개 대분류와 세분 위임의 근거. 강의자료 예시 조문</td></tr>
+      <tr><td>법률</td><td>제37조</td><td class="l">용도지구의 지정</td><td class="num">5</td><td class="l">용도지구 법정 열거(9종 + 대통령령 위임). 3주차 검증 2번 항목의 원문</td></tr>
+      <tr><td>법률</td><td>제40조의3</td><td class="l">도시혁신구역의 지정 등</td><td class="num">7</td><td class="l">3주차 검증 1번(삭제된 제40조의2 대신 들어온 조문) 확인</td></tr>
+      <tr><td>법률</td><td>제40조의4</td><td class="l">복합용도구역의 지정 등</td><td class="num">5</td><td class="l">같은 이유. 공간재구조화계획으로 결정하는 신설 구역</td></tr>
+      <tr><td>법률</td><td>제76조</td><td class="l">용도지역 및 용도지구에서의 건축물의 건축 제한 등</td><td class="num">6</td><td class="l">대상지 건축물 용도 제한의 상위 근거</td></tr>
+      <tr><td>법률</td><td>제77조</td><td class="l">용도지역의 건폐율</td><td class="num">5</td><td class="l">건폐율을 대통령령 범위에서 조례로 정하도록 한 위임 구조</td></tr>
+      <tr><td>법률</td><td>제78조</td><td class="l">용도지역에서의 용적률</td><td class="num">7</td><td class="l">용적률의 같은 위임 구조</td></tr>
+      <tr><td>법률</td><td>제80조의4</td><td class="l">도시혁신구역에서의 행위 제한</td><td class="num">1</td><td class="l">3주차 검증 1번의 정정값(구 제80조의3 자리)</td></tr>
+      <tr><td>법률</td><td>제80조의5</td><td class="l">복합용도구역에서의 행위 제한</td><td class="num">2</td><td class="l">같은 이유</td></tr>
+
+      <tr class="grp"><td colspan="5">국토의 계획 및 이용에 관한 법률 시행령 (법령ID 009419 / MST 288857 / 시행 2026-09-18)</td></tr>
+      <tr><td>대통령령</td><td>제30조</td><td class="l">용도지역의 세분</td><td class="num">2</td><td class="l">주거·상업·공업·녹지의 세분 정의. 용도지역 21종 표의 근거</td></tr>
+      <tr><td>대통령령</td><td>제84조</td><td class="l">용도지역안에서의 건폐율</td><td class="num">9</td><td class="l">21종 건폐율 <b>법정 상한</b></td></tr>
+      <tr><td>대통령령</td><td>제85조</td><td class="l">용도지역 안에서의 용적률</td><td class="num">12</td><td class="l">21종 용적률 <b>법정 범위</b>(하한~상한)</td></tr>
+
+      <tr class="grp"><td colspan="5">서울특별시 도시계획 조례 / 같은 조례 시행규칙 (서울특별시)</td></tr>
+      <tr><td>조례</td><td>제44조</td><td class="l">용도지역 안에서의 건폐율</td><td class="num">1</td><td class="l">대상지에 <b>실제로 걸리는</b> 건폐율</td></tr>
+      <tr><td>조례</td><td>제48조</td><td class="l">용도지역 안에서의 용적률</td><td class="num">1</td><td class="l">실제 용적률 + 서울도심 단서</td></tr>
+      <tr><td>규칙</td><td>제19조</td><td class="l">서울도심의 범역 획정 등</td><td class="num">1</td><td class="l">위 단서의 적용 여부를 가르는 범역 규정</td></tr>
+      <tr><td>규칙</td><td>별표 5</td><td class="l">서울도심 범역 확정 도면(제19조 관련)</td><td class="num">1</td><td class="l">범역의 실체. <span class="v-wait">본문 텍스트 없음 — 도면 첨부파일</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>3단계로 받은 원문 — 강의자료 예시와 대조</h3>
+  <div class="quote">
+    <div class="cap">받은 조문 (원문 그대로, 각 호는 줄바꿈만 정리)</div>
+    <b>제36조(용도지역의 지정)</b><br>
+    ① 국토교통부장관, 시·도지사 또는 대도시 시장은 다음 각 호의 어느 하나에 해당하는 용도지역의 지정 또는 변경을
+    도시·군관리계획으로 결정한다. &lt;개정 2011.4.14, 2013.3.23&gt;<br>
+    &nbsp;&nbsp;1. 도시지역: 가. 주거지역 나. 상업지역 다. 공업지역 라. 녹지지역<br>
+    &nbsp;&nbsp;2. 관리지역: 가. 보전관리지역 나. 생산관리지역 다. 계획관리지역<br>
+    &nbsp;&nbsp;3. 농림지역 &nbsp;&nbsp;4. 자연환경보전지역<br>
+    ② … 제1항 각 호 및 같은 항 각 호 각 목의 용도지역을 도시·군관리계획결정으로 다시 세분하여 지정하거나 변경할 수 있다.
+    <div class="note" style="margin-top:6px">
+      「국토의 계획 및 이용에 관한 법률」 제36조제1항 (법률 제21447호, 2026. 7. 1. 시행), 국가법령정보센터, 2026-09-21 조회
+    </div>
+  </div>
+
+  <div class="warn">
+    <b>대조 결과 — 예시 화면을 인용하면 안 된다.</b> 강의자료 12쪽 3단계 그림에는 제36조가
+    "용도지역의 <u>변경</u>"이라는 제목에 "1. 토지의 효율적 이용 2. 도시의 기능 증진 3. 환경의 보전"과 소규모 건축물 단서가 붙은 모습으로 그려져 있다.
+    실제로 받아 본 제36조는 <b>제목이 "용도지역의 지정"</b>이고 각 호는 <b>도시·관리·농림·자연환경보전지역의 4개 대분류</b>이며 그런 단서는 없다.
+    그림은 화면 예시일 뿐이므로, 조문은 반드시 3단계에서 받은 원문으로 옮겨 적어야 한다는 것이 이번 실행의 첫 소득이다.
+  </div>
+
+  <p class="note">
+    법령 응답은 &lt;조문단위&gt; 밑에 항·호·목이 따로 와서 <b>항 단위</b>로 쪼갰고, 자치법규 응답은 &lt;조&gt; 하나에 호까지
+    통째로 들어 있어 <b>조 단위</b>로만 쪼갰다. 조례 제44조·제48조의 항 수가 1인 이유다.
+  </p>
+</section>
+
+<!-- ===================== PAGE 3 ===================== -->
+<section class="page">
+  <h2>④ 4단계(시점 기록)가 잡아낸 것</h2>
+  <p class="sub">"현행"은 한 날짜가 아니다 — 같은 날 조회해도 법령마다 시행일이 다르다</p>
+
+  <div class="hyp">
+    <div class="k">관측</div>
+    <div class="v">
+      한 날(2026-09-21)에 받은 네 건의 시행일이 <u>2024-10-14 · 2026-07-01 · 2026-07-13 · 2026-09-18</u>로 모두 다르다.
+      조회일만 적고 시행일을 빼면, 넉 달 뒤 같은 문장을 다시 검증할 수 없다.
+    </div>
+  </div>
+
+  <h3>값의 위임 사슬 — 대상지에 실제로 걸리는 값은 맨 아래다</h3>
+  <table>
+    <thead>
+      <tr>
+        <th class="l" style="width:130px">용도지역</th>
+        <th style="width:110px">영 제84조 건폐율 상한<br><span class="note">시행 2026-09-18</span></th>
+        <th style="width:100px">조례 제44조 건폐율<br><span class="note">시행 2026-07-13</span></th>
+        <th style="width:120px">영 제85조 용적률 범위<br><span class="note">시행 2026-09-18</span></th>
+        <th style="width:100px">조례 제48조 용적률<br><span class="note">시행 2026-07-13</span></th>
+        <th class="l">서울도심 단서</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="l">제3종일반주거지역</td><td>50% 이하</td><td><b>50%</b></td><td>100~300%</td><td><b>250%</b></td><td class="l">—</td></tr>
+      <tr><td class="l">일반상업지역</td><td>80% 이하</td><td><b>60%</b></td><td>200~1,300%</td><td><b>800%</b></td><td class="l">서울도심은 600%</td></tr>
+      <tr><td class="l">근린상업지역</td><td>70% 이하</td><td><b>60%</b></td><td>200~900%</td><td><b>600%</b></td><td class="l">서울도심은 500%</td></tr>
+      <tr><td class="l">중심상업지역</td><td>90% 이하</td><td><b>60%</b></td><td>200~1,500%</td><td><b>1,000%</b></td><td class="l">서울도심은 800%</td></tr>
+    </tbody>
+  </table>
+  <p class="note">
+    법률 제77조·제78조가 대통령령에, 영 제84조·제85조가 다시 조례에 위임한다.
+    상업지역 건폐율은 조례가 상한보다 10~30%p 강화해 정한다. 대상지 값을 적을 때 영의 상한을 쓰면 실제보다 크게 잡힌다.
+  </p>
+
+  <h2 style="margin-top:14px">⑤ 3주차 검증로그 6번 후속 — "조회 대기" 항목을 끝까지 따라갔다</h2>
+  <p class="sub">서울도심 범역: 조례 단서 → 규칙 제19조 → 별표 5 도면으로 이어지는 위임을 끝까지 열어 봤다</p>
+  <table>
+    <thead>
+      <tr><th style="width:58px">항목</th><th class="l">내용</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>검증 대상</td><td class="l">대상지(종로구청 일대)가 서울도심에 해당하는가 — 해당하면 일반상업 용적률이 800%가 아니라 600%다</td></tr>
+      <tr><td>받은 원문</td><td class="l">제19조(서울도심의 범역 획정 등) 조례 제47조제2항제1호, 제48조제7호부터 제10호까지의 각각의 단서 및 조례 별표 16 제2호나목 내의
+        서울도심의 범역은 <b>한양도성과 그 주변지역</b>을 포함하는 지역으로서 <b>별표 5에서 정한 구역</b>으로 한다</td></tr>
+      <tr><td>별표 5</td><td class="l">"서울도심 범역 확정 도면(제19조 관련)". API 응답의 별표내용이 비어 있고 <b>첨부파일(HWP, 약 1.1MB)로만</b> 제공된다.
+        내려받아 확인한 결과 내용은 <b>도면</b>이며 경계 좌표·행정구역 목록 같은 텍스트가 없다 (flDownload.do?flSeq=144765307)</td></tr>
+      <tr><td>판정</td><td class="l"><span class="verdict v-wait">부분 해소</span> — 위임 구조(조례 제48조 단서 → 규칙 제19조 → 별표 5 도면)와 파일 위치는 확정했다.
+        다만 해당 여부는 도면을 도면으로 읽어야 확정되므로, 3주차와 같이 <b>빈칸으로 둔다</b>. 텍스트가 없는 곳을 추정으로 채우지 않는다</td></tr>
+      <tr><td>다음 수단</td><td class="l">서울시 도시계획포털·국토정보플랫폼의 도시계획 도면 서비스에서 대상지 필지를 도면 위에 올려 확인 (좌표 판정이 필요한 작업)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top:14px">⑥ 재현 방법</h2>
+  <p class="sub">같은 명령으로 같은 CSV가 다시 나온다. 조회일만 실행일로 바뀐다</p>
+
+  <div class="cmd">powershell -ExecutionPolicy Bypass -File scripts\fetch_law_articles.ps1 -OC &lt;본인OC&gt; -TargetsPath scripts\law_targets_jongno.json
+powershell -ExecutionPolicy Bypass -File scripts\fetch_law_articles.ps1 -FromCache -TargetsPath scripts\law_targets_jongno.json   # 호출 없이 저장된 원본만 재파싱</div>
+
+  <table>
+    <thead><tr><th class="l" style="width:230px">파일</th><th class="l">내용</th></tr></thead>
+    <tbody>
+      <tr><td class="l mono">scripts/law_targets_jongno.json</td><td class="l">수집 대상 목록. 법령은 type=law, 자치법규는 type=ordin, 별표는 tables로 지정</td></tr>
+      <tr><td class="l mono">scripts/fetch_law_articles.ps1</td><td class="l">네 단계를 그대로 수행하는 스크립트. 이번에 자치법규(ordin)·별표 수집과 식별자 대장 출력을 추가했다</td></tr>
+      <tr><td class="l mono">out/law/law_articles.csv</td><td class="l">조·항 67행. 행마다 법령ID·MST·시행일·조회일·출처표기 포함 → 동봉 <b>비교과_MCP_조문표.csv</b></td></tr>
+      <tr><td class="l mono">out/law/law_versions.csv</td><td class="l">법령 4건의 식별자·시점 대장 → 동봉 <b>비교과_MCP_법령식별자대장.csv</b></td></tr>
+      <tr><td class="l mono">out/law/text/*.txt</td><td class="l">법령별 조문 전문(머리말에 ID·MST·시행일·조회일). 보고서에 붙여쓰기용</td></tr>
+      <tr><td class="l mono">out/law/raw/*.xml</td><td class="l">API 원본 응답 8건. 파싱을 고쳐도 같은 원본으로 다시 돌릴 수 있다</td></tr>
+    </tbody>
+  </table>
+
+  <div class="src">
+    <h3>출처</h3>
+    <dl>
+      <dt>조문 원문</dt><dd>국가법령정보센터 OPEN API (www.law.go.kr/DRF), 2026-09-21 조회. 법령 목록·본문 조회 및 자치법규 목록·본문 조회</dd>
+      <dt>법률</dt><dd>「국토의 계획 및 이용에 관한 법률」 (법률 제21447호, 2026. 7. 1. 시행) 법령ID 009294 / MST 284013</dd>
+      <dt>대통령령</dt><dd>「국토의 계획 및 이용에 관한 법률 시행령」 (대통령령 제36587호, 2026. 9. 18. 시행) 법령ID 009419 / MST 288857</dd>
+      <dt>조례</dt><dd>「서울특별시 도시계획 조례」 (서울특별시조례 제10139호, 2026. 7. 13. 시행) 자치법규ID 2000719 / MST 2149501</dd>
+      <dt>규칙</dt><dd>「서울특별시 도시계획 조례 시행규칙」 (서울특별시규칙 제4669호, 2024. 10. 14. 시행) 자치법규ID 2000769 / MST 1976247</dd>
+      <dt>강의자료</dt><dd>스마트도시계획(캡스톤디자인) 비교과 12쪽 「말로 조문을 받는 네 단계」</dd>
+      <dt>앞 과제</dt><dd>3주차 과제 「대상지 계획단위 가설 + 법령 검증 로그」 (submit/3주차_법령검증로그.csv) — 6번 항목의 후속 조회를 이 문서에서 이어 받았다</dd>
+    </dl>
+  </div>
+</section>
+</html>

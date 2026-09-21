@@ -52,3 +52,32 @@ powershell -ExecutionPolicy Bypass -File scripts/build_dataset.ps1
 - 지도 하단 막대는 **화면에 보이는 범위**의 용도 구성비라 이동·확대하면 같이 바뀐다.
 - SGIS 오픈API(토큰 4시간) 절차를 함께 정리해 두었다. 같은 격자 크기로 인구·가구·주택 통계를 붙이면
   "건물 용도 × 인구" 비교로 확장할 수 있다.
+
+## 법령 조문 수집
+
+```
+scripts/law_targets_jongno.json  종로(수업 대상지)용 수집 목록 — 국토계획법·시행령·서울시 조례·규칙
+scripts/law_targets.json         시흥 포동(공모전)용 수집 목록
+scripts/fetch_law_articles.ps1   국가법령정보 OPEN API 호출  -> out/law/
+```
+
+사전에 [open.law.go.kr](https://open.law.go.kr) > OPEN API 신청에서 **목록 조회와 본문 조회를
+함께** 신청해 승인(1~2일)받고, 호출할 PC의 공인 IP를 등록해야 한다. `OC`는 가입 이메일의 `@` 앞부분.
+
+```bash
+powershell -ExecutionPolicy Bypass -File scripts/fetch_law_articles.ps1 -OC <본인OC> -TargetsPath scripts/law_targets_jongno.json
+```
+
+수집 목록의 `type`으로 대상을 고른다. `law`는 법령(법률·시행령·시행규칙), `ordin`은 자치법규(조례·규칙)다.
+자치법규는 25개 자치구가 같은 제명을 쓰므로 제명이 완전히 일치하는 건만 고른다.
+`tables`에 별표 번호를 적으면 그 별표도 함께 받는다. 도면처럼 본문 텍스트가 없는 별표는
+값을 지어내지 않고 **첨부파일 주소만** 남긴다.
+
+`out/law/law_articles.csv`는 조·항 단위 표에 **법령ID·MST·시행일·조회일**과 인용용 출처표기를 함께 남기고,
+`out/law/law_versions.csv`는 법령별 식별자·시점 대장을 남긴다.
+법령ID는 개정돼도 고정이지만 MST는 시행일 버전마다 바뀌므로, 나중에 같은 조문을 다시 찾으려면 이 네 값이 필요하다.
+API 원본 XML은 `out/law/raw/`에 남아 `-FromCache`로 호출 없이 다시 파싱할 수 있다.
+
+같은 날 조회해도 시행일은 법령마다 다르다. 2026-09-21 조회 기준으로 종로 대상지에 걸리는 네 건은
+법률 2026-07-01 · 시행령 2026-09-18 · 서울시 조례 2026-07-13 · 같은 조례 시행규칙 2024-10-14로
+모두 달랐다. 실행 기록은 `submit/비교과_MCP_조문조회_임성아.html`에 정리했다.
