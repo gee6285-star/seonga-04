@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>3주차 비교과 과제 — 조문 카드가 오른 팀 화면</title>
+<style>
+  @page { size: A4; margin: 10mm 11mm; }
+  *{ box-sizing:border-box; }
+  body{
+    font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    color:#111; background:#fff; font-size:9pt; line-height:1.45; margin:0; zoom:0.86;
+  }
+  .mono{ font-family:Consolas,"D2Coding",monospace; }
+
+  header.doc{ border-bottom:2px solid #1b3f78; padding-bottom:7px; margin-bottom:10px; }
+  header.doc h1{ font-size:15pt; margin:0 0 4px; color:#1b3f78; letter-spacing:-.3px; }
+  header.doc .meta{ font-size:8.8pt; color:#444; }
+  .addr{
+    margin-top:6px; padding:6px 9px; background:#eef3fa; border-left:3px solid #1b3f78;
+    font-size:8.8pt; line-height:1.65;
+  }
+  .addr b{ color:#1b3f78; }
+  .addr .u{ font-family:Consolas,"D2Coding",monospace; }
+
+  h2{ font-size:11pt; margin:11px 0 4px; color:#1b3f78; border-left:4px solid #1b3f78; padding-left:7px; }
+  .sub{ font-size:8.5pt; color:#555; margin:0 0 6px; }
+
+  table{ width:100%; border-collapse:collapse; font-size:8.2pt; margin-bottom:6px; }
+  th,td{ border:1px solid #c8cdd6; padding:3px 6px; text-align:center; vertical-align:top; }
+  th{ background:#e8edf5; color:#1b3f78; font-weight:600; }
+  td.l,th.l{ text-align:left; }
+  .ok{ color:#1b6b34; font-weight:700; }
+  .wait{ color:#9a6b12; font-weight:700; }
+
+  figure{ margin:0 0 7px; }
+  figure img{ width:100%; display:block; border:1px solid #c8cdd6; }
+  figure.shrink img{ width:70%; margin:0 auto; }
+  figcaption{ font-size:7.8pt; color:#555; margin-top:3px; }
+  figcaption b{ color:#111; }
+
+  .two{ display:flex; gap:9px; align-items:flex-start; }
+  .two .l-col{ flex:1 1 62%; }
+  .two .r-col{ flex:1 1 38%; }
+
+  .key{
+    border:1px solid #d9c08a; background:#fdf8ec; padding:7px 9px;
+    font-size:8.3pt; line-height:1.6;
+  }
+  .key b{ color:#8a6413; }
+  .note{ font-size:8.2pt; color:#444; line-height:1.55; margin:4px 0 0; }
+  .note b{ color:#111; }
+</style>
+
+<header class="doc">
+  <h1>3주차 비교과 과제 — 조문 카드가 오른 팀 화면</h1>
+  <div class="meta">
+    스마트도시계획(캡스톤디자인) · 비교과 · 임성아 · 대상지 서울 종로구 일대 · 작성일 2026-09-21 · <b>법령 조회일 2026-09-21</b>
+  </div>
+  <div class="addr">
+    <b>배포 주소</b> <span class="u">https://claude.ai/artifact/SNoAMHQqKJ6WUXsvpXjr8b</span><br>
+    <b>저장소 주소</b> <span class="u">https://github.com/gee6285-star/seonga-04</span> &nbsp;·&nbsp;
+    카드를 올린 커밋 <span class="u">182eb65</span> (2026-09-21, 23개 파일)
+  </div>
+</header>
+
+<h2>과제 ①–④ 수행 결과</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width:26px">번호</th>
+      <th class="l" style="width:150px">과제</th>
+      <th style="width:52px">결과</th>
+      <th class="l">무엇을 했고 어디서 확인되는가</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>①</td>
+      <td class="l">세 번째 칸에 용적률 카드 —<br>값·단위·출처·조회일 네 칸</td>
+      <td class="ok">완료</td>
+      <td class="l"><b>값 250 · 단위 퍼센트 이하(상한) · 출처 「서울특별시 도시계획 조례」 제48조제5호 시행 2026-07-13 ·
+        조회일 2026-09-21</b>. 네 칸을 카드 안에 이름표와 함께 표시했다(아래 갈무리)</td>
+    </tr>
+    <tr>
+      <td>②</td>
+      <td class="l">커밋으로 남기고 GitHub 저장소<br>화면에서 확인</td>
+      <td class="ok">완료</td>
+      <td class="l">커밋 <span class="mono">182eb65</span> "팀 화면 세 번째 칸에 조례 용적률 카드 추가 + 용도지역 21종 CSV".
+        <span class="mono">github.com/gee6285-star/seonga-04/commits/main</span> 화면에 보인다(아래 갈무리)</td>
+    </tr>
+    <tr>
+      <td>③</td>
+      <td class="l">조례 건폐율·용적률 21종 CSV를<br>저장소에 둠</td>
+      <td class="ok">완료</td>
+      <td class="l"><span class="mono">data/seoul_zoning21.csv</span> (동봉 <span class="mono">3주차_비교과_용도지역21종.csv</span>).
+        값을 손으로 옮기지 않고 <span class="mono">scripts/build_zoning21.ps1</span>이 조문 원문에서 뽑는다</td>
+    </tr>
+    <tr>
+      <td>④</td>
+      <td class="l">커밋에 인증키가 섞이지 않았는지<br>열어 확인한 기록 한 줄</td>
+      <td class="ok">완료</td>
+      <td class="l"><span class="mono">키점검로그.md</span>에 한 줄로 남겼다. 실제로 두 건을 고쳤다 — 아래 ④ 항목</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>① 배포된 팀 화면 — 세 번째 칸</h2>
+<figure class="shrink">
+  <img src="3주차_비교과_화면갈무리.png" alt="팀 지표 카드 네 칸. 세 번째 칸이 조례 용적률 250퍼센트 이하">
+  <figcaption>배포 주소에서 열리는 팀 화면. 왼쪽부터 1주차 기온(27.8 °C) · 2주차 건물밀도(673.6 동/km²) ·
+    <b>세 번째 칸이 3주차 조례 용적률 250 퍼센트 이하</b>. 네 번째 칸은 서울도심 해당 여부가
+    규칙 별표 5 <b>도면</b>에만 있어 <span class="wait">조회 대기</span>로 비워 뒀다 —
+    임의 값을 넣지 않는 것이 이 화면의 규칙이다.</figcaption>
+</figure>
+
+<div class="two">
+  <div class="l-col">
+    <h2 style="margin-top:4px">② 저장소 화면의 커밋</h2>
+    <figure>
+      <img src="3주차_비교과_커밋갈무리.png" alt="GitHub 커밋 목록에 182eb65 커밋이 보인다">
+      <figcaption>공개 저장소 커밋 목록 첫 줄에 오늘 커밋이 보인다.</figcaption>
+    </figure>
+  </div>
+  <div class="r-col">
+    <h2 style="margin-top:4px">③ 용도지역 21종 표</h2>
+    <p class="sub" style="margin-bottom:4px">도시지역 16종은 조례가 정하고, 관리·농림·자연환경보전 5종은 서울시 조례에 없어 영 기준만 적는다</p>
+    <table>
+      <thead>
+        <tr><th class="l">용도지역</th><th>영 상한<br>건폐/용적</th><th>조례<br>건폐/용적</th><th>서울<br>도심</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="l">제3종일반주거</td><td>50 / 300</td><td><b>50 / 250</b></td><td>—</td></tr>
+        <tr><td class="l">준주거</td><td>70 / 500</td><td>60 / 400</td><td>—</td></tr>
+        <tr><td class="l">중심상업</td><td>90 / 1,500</td><td>60 / 1,000</td><td>800</td></tr>
+        <tr><td class="l">일반상업</td><td>80 / 1,300</td><td>60 / 800</td><td>600</td></tr>
+        <tr><td class="l">계획관리</td><td>40 / 100</td><td>조례 미규정</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="note">21종 전부와 근거 조문·시행일·조회일은 동봉 CSV에 있다.
+      3주차 본수업에서 수기로 만든 표와 <b>21종 모두 값이 일치</b>했다.</p>
+  </div>
+</div>
+
+<h2>④ 인증키 점검 — 열어 보니 두 건이 걸렸다</h2>
+<div class="key">
+  <b>기록(키점검로그.md).</b> 2026-09-21 · 스테이징 23개 파일을 <span class="mono">git diff --cached</span>로 열어 확인 — 인증키 없음.
+  다만 그 과정에서 두 군데를 고쳤다. ⑴ <span class="mono">scripts/fetch_law_articles.ps1</span>의 사용 예시에 <b>실제 OC 값</b>이 적혀 있어
+  <span class="mono">&lt;본인OC&gt;</span>로 바꿨고, ⑵ API 원본 응답 <span class="mono">out/law/raw/*.xml</span>의 상세링크에
+  <span class="mono">OC=…</span>가 그대로 들어 있어 <span class="mono">.gitignore</span>로 <span class="mono">out/</span> 전체를 제외했다.
+  PDF·PNG 같은 이진 파일도 <span class="mono">grep -a</span>로 따로 봤고 걸린 것은 없다.
+  키는 환경변수 <span class="mono">LAW_OC</span>에만 둔다.
+</div>
+<p class="note">
+  <b>남는 주의점</b> — 국가법령정보 OC는 가입 이메일의 @ 앞부분이라 GitHub 사용자명에서 유추될 수 있다.
+  등록한 IP에서 호출할 때만 응답이 오지만 코드에 적지 않는 원칙은 지켰다. &nbsp;·&nbsp;
+  <b>배포 주소는 현재 비공개</b>다. 링크를 받은 사람이 열려면 페이지 공유 메뉴에서 "링크가 있는 모든 사용자"로 바꿔야 한다. &nbsp;·&nbsp;
+  <b>도구</b> — 법령 MCP 서버가 연결돼 있지 않아 MCP가 부르는 것과 같은 국가법령정보 OPEN API를
+  <span class="mono">scripts/fetch_law_articles.ps1</span>로 직접 호출했다(자치법규 <span class="mono">target=ordin</span>).
+  받은 값과 네 단계는 같다.
+</p>
+</html>
