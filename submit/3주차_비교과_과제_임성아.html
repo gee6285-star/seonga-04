@@ -7,7 +7,7 @@
   *{ box-sizing:border-box; }
   body{
     font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
-    color:#111; background:#fff; font-size:9pt; line-height:1.45; margin:0; zoom:0.8;
+    color:#111; background:#fff; font-size:9pt; line-height:1.45; margin:0; zoom:0.85;
   }
   .mono{ font-family:Consolas,"D2Coding",monospace; }
 
@@ -34,12 +34,18 @@
   figure{ margin:0 0 7px; }
   figure img{ width:100%; display:block; border:1px solid #c8cdd6; }
   figure.shrink img{ width:64%; margin:0 auto; }
+  figure.shrink2 img{ width:56%; margin:0 auto; }
+  table.z21{ font-size:7.5pt; }
+  table.z21 th, table.z21 td{ padding:2px 4px; }
+  table.z21 td.sep{ border-left:2px solid #9aa6b8; }
+  table.z21 th.sep{ border-left:2px solid #9aa6b8; }
+  table.z21 tr.city td{ background:#f7f9fc; }
   figcaption{ font-size:7.8pt; color:#555; margin-top:3px; }
   figcaption b{ color:#111; }
 
   .two{ display:flex; gap:9px; align-items:flex-start; }
-  .two .l-col{ flex:1 1 62%; }
-  .two .r-col{ flex:1 1 38%; }
+  .two .l-col{ flex:1 1 60%; }
+  .two .r-col{ flex:1 1 40%; }
 
   .key{
     border:1px solid #d9c08a; background:#fdf8ec; padding:7px 9px;
@@ -48,6 +54,9 @@
   .key b{ color:#8a6413; }
   .note{ font-size:8.2pt; color:#444; line-height:1.55; margin:4px 0 0; }
   .note b{ color:#111; }
+  ul.done{ margin:0 0 6px; padding-left:16px; font-size:8.4pt; line-height:1.5; }
+  ul.done li{ margin-bottom:2px; }
+  ul.done b{ color:#1b3f78; }
 </style>
 
 <header class="doc">
@@ -63,83 +72,58 @@
 </header>
 
 <h2>과제 ①–④ 수행 결과</h2>
-<table>
-  <thead>
-    <tr>
-      <th style="width:26px">번호</th>
-      <th class="l" style="width:150px">과제</th>
-      <th style="width:52px">결과</th>
-      <th class="l">무엇을 했고 어디서 확인되는가</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>①</td>
-      <td class="l">세 번째 칸에 용적률 카드 —<br>값·단위·출처·조회일 네 칸</td>
-      <td class="ok">완료</td>
-      <td class="l">값 <b>250</b> · 단위 <b>퍼센트 이하(상한)</b> · 출처 <b>「서울특별시 도시계획 조례」</b> ·
-        <b>법령ID 2000719</b>(MST 2149501) · <b>조문번호 제48조제5호</b> · <b>시행일 2026-07-13</b> · <b>조회일 2026-09-21</b>
-        — 일곱 칸을 각각 이름표를 달아 표시했다</td>
-    </tr>
-    <tr>
-      <td>②</td>
-      <td class="l">커밋으로 남기고 GitHub 저장소<br>화면에서 확인</td>
-      <td class="ok">완료</td>
-      <td class="l">커밋 <span class="mono">182eb65</span> "팀 화면 세 번째 칸에 조례 용적률 카드 추가 + 용도지역 21종 CSV".
-        <span class="mono">github.com/gee6285-star/seonga-04/commits/main</span> 화면에 보인다(아래 갈무리)</td>
-    </tr>
-    <tr>
-      <td>③</td>
-      <td class="l">조례 건폐율·용적률 21종 CSV를<br>저장소에 둠</td>
-      <td class="ok">완료</td>
-      <td class="l"><span class="mono">data/seoul_zoning21.csv</span> (동봉 <span class="mono">3주차_비교과_용도지역21종.csv</span>).
-        값을 손으로 옮기지 않고 <span class="mono">scripts/build_zoning21.ps1</span>이 조문 원문에서 뽑는다</td>
-    </tr>
-    <tr>
-      <td>④</td>
-      <td class="l">커밋에 인증키가 섞이지 않았는지<br>열어 확인한 기록 한 줄</td>
-      <td class="ok">완료</td>
-      <td class="l"><span class="mono">키점검로그.md</span>에 한 줄로 남겼다. 실제로 두 건을 고쳤다 — 아래 ④ 항목</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2>① 배포된 팀 화면 — 세 번째 칸</h2>
-<figure class="shrink">
-  <img src="3주차_비교과_화면갈무리.png" alt="팀 지표 카드 네 칸. 세 번째 칸이 조례 용적률 250퍼센트 이하">
-  <figcaption>왼쪽부터 1주차 기온(27.8 °C) · 2주차 건물밀도(673.6 동/km²) · <b>세 번째 칸이 3주차 조례 용적률</b>.
-    조례 카드에는 <b>법령ID · 조문번호 · 시행일 · 조회일</b>이 각각 한 줄씩 들어 있다 —
-    법령ID는 개정돼도 고정이고 MST는 시행일 버전마다 바뀌므로 둘 다 적었다.
-    네 번째 칸은 서울도심 해당 여부가 규칙 별표 5 <b>도면</b>에만 있어 <span class="wait">조회 대기</span>로 비워 뒀다.</figcaption>
-</figure>
-
+<ul class="done">
+  <li><b>①</b> 세 번째 칸에 용적률 카드 — 값 <b>250</b> · 단위 <b>퍼센트 이하(상한)</b> · 출처 <b>「서울특별시 도시계획 조례」</b> ·
+    <b>법령ID 2000719</b> · <b>조문번호 제48조제5호</b> · <b>시행일 2026-07-13</b> · <b>조회일 2026-09-21</b> (일곱 칸 모두 이름표를 달아 표시)</li>
+  <li><b>②</b> 커밋 <span class="mono">182eb65</span>가 <span class="mono">github.com/gee6285-star/seonga-04/commits/main</span> 화면에 보인다</li>
+  <li><b>③</b> 조례 건폐율·용적률 <b>21종 전부</b>를 <span class="mono">data/seoul_zoning21.csv</span>로 저장소에 뒀다
+    (동봉 <span class="mono">3주차_비교과_용도지역21종.csv</span>). 값은 <span class="mono">scripts/build_zoning21.ps1</span>이 조문 원문에서 뽑는다</li>
+  <li><b>④</b> 인증키 점검 기록을 <span class="mono">키점검로그.md</span>에 한 줄 남겼다 — 실제로 두 건을 고쳤다(아래 ④)</li>
+</ul>
 <div class="two">
   <div class="l-col">
-    <h2 style="margin-top:4px">② 저장소 화면의 커밋</h2>
+    <h2>① 배포된 팀 화면 — 세 번째 칸</h2>
     <figure>
-      <img src="3주차_비교과_커밋갈무리.png" alt="GitHub 커밋 목록에 182eb65 커밋이 보인다">
-      <figcaption>공개 저장소 커밋 목록 첫 줄에 오늘 커밋이 보인다.</figcaption>
+      <img src="3주차_비교과_화면갈무리.png" alt="팀 지표 카드 네 칸. 세 번째 칸이 조례 용적률 250퍼센트 이하">
+      <figcaption>왼쪽부터 1주차 기온(27.8 °C) · 2주차 건물밀도(673.6 동/km²) · <b>세 번째 칸이 3주차 조례 용적률</b>.
+        조례 카드에는 <b>법령ID · 조문번호 · 시행일 · 조회일</b>이 한 줄씩 들어 있다(법령ID는 고정, MST는 버전마다 바뀌어 둘 다 적었다).
+        네 번째 칸은 서울도심 해당 여부가 규칙 별표 5 <b>도면</b>에만 있어 <span class="wait">조회 대기</span>로 비워 뒀다.</figcaption>
     </figure>
   </div>
   <div class="r-col">
-    <h2 style="margin-top:4px">③ 용도지역 21종 표</h2>
-    <p class="sub" style="margin-bottom:4px">도시지역 16종은 조례가 정하고, 관리·농림·자연환경보전 5종은 서울시 조례에 없어 영 기준만 적는다</p>
-    <table>
-      <thead>
-        <tr><th class="l">용도지역</th><th>영 상한<br>건폐/용적</th><th>조례<br>건폐/용적</th><th>서울<br>도심</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="l">제3종일반주거</td><td>50 / 300</td><td><b>50 / 250</b></td><td>—</td></tr>
-        <tr><td class="l">준주거</td><td>70 / 500</td><td>60 / 400</td><td>—</td></tr>
-        <tr><td class="l">중심상업</td><td>90 / 1,500</td><td>60 / 1,000</td><td>800</td></tr>
-        <tr><td class="l">일반상업</td><td>80 / 1,300</td><td>60 / 800</td><td>600</td></tr>
-        <tr><td class="l">계획관리</td><td>40 / 100</td><td>조례 미규정</td><td>—</td></tr>
-      </tbody>
-    </table>
-    <p class="note">CSV는 21종마다 <b>법령ID · 조문번호 · 시행일 · 조회일</b>을 열로 갖는다
-      (영 009419/MST 288857, 조례 2000719/MST 2149501). 3주차 본수업의 수기 표와 <b>21종 모두 값이 일치</b>했다.</p>
+    <h2>② 저장소 화면의 커밋</h2>
+    <figure>
+      <img src="3주차_비교과_커밋갈무리.png" alt="GitHub 커밋 목록에 182eb65 커밋이 보인다">
+      <figcaption>공개 저장소 커밋 목록 첫 줄에 오늘 커밋이 보인다.
+        커밋 <span class="mono">182eb65</span> · 23개 파일.</figcaption>
+    </figure>
   </div>
 </div>
+
+<h2>③ 용도지역 21종 — 건폐율 · 용적률 전체</h2>
+<p class="sub">영 제84·85조(법령ID 009419 / MST 288857 / 시행 2026-09-18) · 조례 제44·48조(법령ID 2000719 / MST 2149501 / 시행 2026-07-13) 원문에서 뽑음 · 조회일 2026-09-21 · 단위 %</p>
+<table class="z21">
+  <thead>
+    <tr>
+      <th>연번</th><th class="l">용도지역</th><th>영 건폐<br>상한</th><th>영 용적<br>하한~상한</th><th>조례<br>건폐</th><th>조례<br>용적</th><th>서울<br>도심</th>
+      <th>연번</th><th class="l">용도지역</th><th>영 건폐<br>상한</th><th>영 용적<br>하한~상한</th><th>조례<br>건폐</th><th>조례<br>용적</th><th>서울<br>도심</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr><td>1</td><td class="l">제1종전용주거</td><td>50</td><td>50~100</td><td>50</td><td>100</td><td>—</td><td class="sep">12</td><td class="l">일반공업</td><td>70</td><td>150~350</td><td>60</td><td>200</td><td>—</td></tr>
+      <tr><td>2</td><td class="l">제2종전용주거</td><td>50</td><td>50~150</td><td>40</td><td>120</td><td>—</td><td class="sep">13</td><td class="l">준공업</td><td>70</td><td>150~400</td><td>60</td><td>400</td><td>—</td></tr>
+      <tr><td>3</td><td class="l">제1종일반주거</td><td>60</td><td>100~200</td><td>60</td><td>150</td><td>—</td><td class="sep">14</td><td class="l">보전녹지</td><td>20</td><td>50~80</td><td>20</td><td>50</td><td>—</td></tr>
+      <tr><td>4</td><td class="l">제2종일반주거</td><td>60</td><td>100~250</td><td>60</td><td>200</td><td>—</td><td class="sep">15</td><td class="l">생산녹지</td><td>20</td><td>50~100</td><td>20</td><td>50</td><td>—</td></tr>
+      <tr><td>5</td><td class="l"><b>제3종일반주거</b></td><td>50</td><td>100~300</td><td><b>50</b></td><td><b>250</b></td><td>—</td><td class="sep">16</td><td class="l">자연녹지</td><td>20</td><td>50~100</td><td>20</td><td>50</td><td>—</td></tr>
+      <tr><td>6</td><td class="l">준주거</td><td>70</td><td>200~500</td><td>60</td><td>400</td><td>—</td><td class="sep">17</td><td class="l">보전관리</td><td>20</td><td>50~80</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>7</td><td class="l">중심상업</td><td>90</td><td>200~1500</td><td>60</td><td>1000</td><td>800</td><td class="sep">18</td><td class="l">생산관리</td><td>20</td><td>50~80</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>8</td><td class="l">일반상업</td><td>80</td><td>200~1300</td><td>60</td><td>800</td><td>600</td><td class="sep">19</td><td class="l">계획관리</td><td>40</td><td>50~100</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>9</td><td class="l">근린상업</td><td>70</td><td>200~900</td><td>60</td><td>600</td><td>500</td><td class="sep">20</td><td class="l">농림</td><td>20</td><td>50~80</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>10</td><td class="l">유통상업</td><td>80</td><td>200~1100</td><td>60</td><td>600</td><td>500</td><td class="sep">21</td><td class="l">자연환경보전</td><td>20</td><td>50~80</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>11</td><td class="l">전용공업</td><td>70</td><td>150~300</td><td>60</td><td>200</td><td>—</td><td class="sep" colspan="7"></td></tr>
+    </tbody>
+</table>
+<p class="note">도시지역 16종만 서울시 조례가 값을 정하고 <b>관리·농림·자연환경보전 5종은 조례에 없어</b> 영 기준만 적는다. 동봉 CSV는 행마다 <b>법령ID · 조문번호 · 시행일 · 조회일</b>을 열로 갖고, 3주차 본수업 수기 표와 <b>21종 모두 값이 일치</b>했다.</p>
 
 <h2>④ 인증키 점검 — 열어 보니 두 건이 걸렸다</h2>
 <div class="key">
