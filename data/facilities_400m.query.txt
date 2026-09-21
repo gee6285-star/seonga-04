@@ -1,0 +1,15 @@
+# 반경 400m 안의 초등학교·근린공원 개수 (과제 ① '개수로 셈' 항목)
+# 엔드포인트: https://overpass.kumi.systems/api/interpreter
+#   overpass-api.de 본서버는 2026-09-21 조회 시 406을 돌려주어 미러를 썼다.
+# 재현:
+#   curl -s -m 200 -X POST "https://overpass.kumi.systems/api/interpreter" \
+#     --data-urlencode "data=$(cat data/facilities_400m.query.txt | grep -v '^#')" \
+#     -o data/facilities_400m.json
+[out:json][timeout:180];
+(
+  node(around:400,37.5735,126.9788)["amenity"="school"];
+  way(around:400,37.5735,126.9788)["amenity"="school"];
+  node(around:400,37.5735,126.9788)["leisure"="park"];
+  way(around:400,37.5735,126.9788)["leisure"="park"];
+);
+out tags center;

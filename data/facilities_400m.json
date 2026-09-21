@@ -1,0 +1,79 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-06-01T08:52:28Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 223157536,
+  "center": {
+    "lat": 37.5735619,
+    "lon": 126.9759308
+  },
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "지하189",
+    "addr:postcode": "03172",
+    "addr:street": "세종대로",
+    "addr:subdistrict": "세종로",
+    "leisure": "park",
+    "name": "세종로공원",
+    "name:en": "Sejonggno Park",
+    "name:ja": "世宗路公園",
+    "name:ko": "세종로공원",
+    "name:zh": "世宗路公园",
+    "phone": "+82 02-2148-2843",
+    "website": "parks.seoul.go.kr/parks/sub/greencity/park_search_result1.jsp?num=1328&pagenum=1&pictogram_num=&keyword=%C1%BE%B7%CE&p_area="
+  }
+},
+{
+  "type": "way",
+  "id": 236942967,
+  "center": {
+    "lat": 37.5737831,
+    "lon": 126.9809489
+  },
+  "tags": {
+    "leisure": "park",
+    "name": "수성공원",
+    "name:en": "Suseong Park",
+    "name:ja": "寿松公園",
+    "name:ko": "수성공원"
+  }
+},
+{
+  "type": "way",
+  "id": 424080008,
+  "center": {
+    "lat": 37.5768799,
+    "lon": 126.9814248
+  },
+  "tags": {
+    "leisure": "park",
+    "name": "열린송현 녹지광장",
+    "name:en": "Yeolrin Songhyeon Green Square",
+    "name:ja": "開かれた松峴緑地広場",
+    "operator": "서울특별시"
+  }
+},
+{
+  "type": "way",
+  "id": 634122055,
+  "center": {
+    "lat": 37.5713598,
+    "lon": 126.9797231
+  },
+  "tags": {
+    "leisure": "park",
+    "name": "청진공원",
+    "name:ja": "清進公園"
+  }
+}
+
+  ]
+}

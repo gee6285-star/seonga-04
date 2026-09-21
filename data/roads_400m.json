@@ -1,0 +1,837 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-28T02:16:18Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 37401016,
+  "center": {
+    "lat": 37.5755683,
+    "lon": 126.9781921
+  },
+  "tags": {
+    "highway": "primary",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:ko-Latn": "Sajingno",
+    "oneway": "yes",
+    "ref": "50",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 37402164,
+  "center": {
+    "lat": 37.5735720,
+    "lon": 126.9829736
+  },
+  "tags": {
+    "cycleway": "shared_lane",
+    "highway": "secondary",
+    "lanes": "6",
+    "name": "우정국로",
+    "name:en": "Ujeongguk-ro",
+    "name:ja": "郵征局路",
+    "name:ko": "우정국로",
+    "name:ko-Latn": "Ujeonggungno",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 37930979,
+  "center": {
+    "lat": 37.5701423,
+    "lon": 126.9773837
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "종로",
+    "name:en": "Jong-ro",
+    "name:ja": "鐘路",
+    "name:ko": "종로",
+    "name:ko-Latn": "Jongno",
+    "oneway": "yes",
+    "ref": "6",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 196079104,
+  "center": {
+    "lat": 37.5756658,
+    "lon": 126.9813477
+  },
+  "tags": {
+    "cycleway:left": "no",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "name": "율곡로",
+    "name:en": "Yulgok-ro",
+    "name:ja": "栗谷路(ユルゴクロ)",
+    "name:ko": "율곡로",
+    "oneway": "yes",
+    "ref": "50",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 196079110,
+  "center": {
+    "lat": 37.5757956,
+    "lon": 126.9814358
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "name": "율곡로",
+    "name:en": "Yulgok-ro",
+    "name:ja": "栗谷路(ユルゴクロ)",
+    "name:ko": "율곡로",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 198566325,
+  "center": {
+    "lat": 37.5702102,
+    "lon": 126.9772200
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路",
+    "name:ko": "세종대로",
+    "oneway": "yes",
+    "ref": "31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 219053200,
+  "center": {
+    "lat": 37.5702084,
+    "lon": 126.9770704
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ko": "세종대로",
+    "name:ko-Latn": "Sejong-daero",
+    "oneway": "yes",
+    "ref": "31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 219053201,
+  "center": {
+    "lat": 37.5702804,
+    "lon": 126.9771517
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "새문안로",
+    "name:en": "Saemunan-ro",
+    "name:ko": "새문안로",
+    "name:ko-Latn": "Saemunan-ro",
+    "oneway": "yes",
+    "ref": "6",
+    "review": "no",
+    "source": "Bing",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 219747865,
+  "center": {
+    "lat": 37.5703738,
+    "lon": 126.9772399
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "3",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路",
+    "name:ko": "세종대로",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 219747866,
+  "center": {
+    "lat": 37.5702789,
+    "lon": 126.9774147
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "종로",
+    "name:en": "Jong-ro",
+    "name:ja": "鐘路",
+    "name:ko": "종로",
+    "name:ko-Latn": "Jongno",
+    "oneway": "yes",
+    "ref": "6",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 220058587,
+  "center": {
+    "lat": 37.5701382,
+    "lon": 126.9771387
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "새문안로",
+    "name:en": "Saemunan-ro",
+    "name:ko": "새문안로",
+    "name:ko-Latn": "Saemunan-ro",
+    "oneway": "yes",
+    "ref": "6",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 221975141,
+  "center": {
+    "lat": 37.5753516,
+    "lon": 126.9825862
+  },
+  "tags": {
+    "highway": "secondary_link",
+    "name": "우정국로",
+    "name:en": "Ujeongguk-ro",
+    "name:ja": "郵征局路",
+    "name:ko": "우정국로",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 377289802,
+  "center": {
+    "lat": 37.5697575,
+    "lon": 126.9793203
+  },
+  "tags": {
+    "highway": "secondary",
+    "horse": "no",
+    "lanes": "2",
+    "name": "무교로",
+    "name:en": "Mugyo-ro",
+    "name:ja": "武橋路",
+    "name:ko": "무교로",
+    "name:ko-Latn": "Mugyo-ro",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 474532059,
+  "center": {
+    "lat": 37.5701371,
+    "lon": 126.9798949
+  },
+  "tags": {
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "종로",
+    "name:en": "Jong-ro",
+    "name:ja": "鍾路(チョンノ)",
+    "name:ko": "종로",
+    "name:ko-Latn": "Jongno",
+    "name:zh": "钟路",
+    "oneway": "yes",
+    "ref": "6",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 495905369,
+  "center": {
+    "lat": 37.5743942,
+    "lon": 126.9776909
+  },
+  "tags": {
+    "highway": "primary_link",
+    "lanes": "1",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "oneway": "yes",
+    "source": "DigitalGlobe Standard",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 516417601,
+  "center": {
+    "lat": 37.5732873,
+    "lon": 126.9771207
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:ko-Latn": "Sejong-daero",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 536153617,
+  "center": {
+    "lat": 37.5703723,
+    "lon": 126.9774274
+  },
+  "tags": {
+    "highway": "primary_link",
+    "lanes": "1",
+    "maxspeed": "30",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "oneway": "yes",
+    "review": "no",
+    "source": "Bing",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 536153619,
+  "center": {
+    "lat": 37.5700840,
+    "lon": 126.9774804
+  },
+  "tags": {
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "primary_link",
+    "lanes": "1",
+    "maxspeed": "30",
+    "oneway": "yes",
+    "review": "no",
+    "source": "Bing",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 616037663,
+  "center": {
+    "lat": 37.5699790,
+    "lon": 126.9772105
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路",
+    "name:ko": "세종대로",
+    "oneway": "yes",
+    "ref": "31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 616037664,
+  "center": {
+    "lat": 37.5733943,
+    "lon": 126.9772482
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 773060737,
+  "center": {
+    "lat": 37.5754736,
+    "lon": 126.9783511
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:zh": "社稷路",
+    "oneway": "yes",
+    "ref": "50",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 825346360,
+  "center": {
+    "lat": 37.5754004,
+    "lon": 126.9760831
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "foot": "no",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "no",
+    "maxspeed": "40",
+    "maxspeed:type": "sign",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:ko-Latn": "Sajingno",
+    "name:zh": "社稷路",
+    "oneway": "yes",
+    "ref": "48",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 908603619,
+  "center": {
+    "lat": 37.5755260,
+    "lon": 126.9756680
+  },
+  "tags": {
+    "cycleway:right": "lane",
+    "cycleway:right:lane": "exclusive",
+    "highway": "primary",
+    "lanes": "3",
+    "maxspeed": "40",
+    "maxspeed:type": "sign",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:ko-Latn": "Sajingno",
+    "name:zh": "社稷路",
+    "oneway": "yes",
+    "ref": "48;50",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1006350108,
+  "center": {
+    "lat": 37.5702797,
+    "lon": 126.9769138
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "새문안로",
+    "name:en": "Saemunan-ro",
+    "name:ja": "新門路(セムナンロ)",
+    "name:ko": "새문안로",
+    "name:ko-Latn": "Saemunan-ro",
+    "name:zh": "新南路",
+    "oneway": "yes",
+    "ref": "6",
+    "review": "no",
+    "source": "Bing",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1084173181,
+  "center": {
+    "lat": 37.5752690,
+    "lon": 126.9771165
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "oneway": "yes",
+    "ref": "48;50",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1084173182,
+  "center": {
+    "lat": 37.5751756,
+    "lon": 126.9771222
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "oneway": "yes",
+    "ref": "50",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1084408278,
+  "center": {
+    "lat": 37.5709530,
+    "lon": 126.9772812
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:left": "no",
+    "cycleway:right": "separate",
+    "highway": "primary",
+    "lanes": "3",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1084408279,
+  "center": {
+    "lat": 37.5715188,
+    "lon": 126.9773148
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "3",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1084408282,
+  "center": {
+    "lat": 37.5708468,
+    "lon": 126.9771249
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:ko-Latn": "Sejong-daero",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1149812450,
+  "center": {
+    "lat": 37.5758790,
+    "lon": 126.9793764
+  },
+  "tags": {
+    "highway": "primary",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:ko-Latn": "Sajingno",
+    "oneway": "yes",
+    "ref": "50",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1153283295,
+  "center": {
+    "lat": 37.5752092,
+    "lon": 126.9770647
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:ko-Latn": "Sejong-daero",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1153283297,
+  "center": {
+    "lat": 37.5756667,
+    "lon": 126.9748014
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "40",
+    "maxspeed:type": "sign",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:ko-Latn": "Sajingno",
+    "name:zh": "社稷路",
+    "oneway": "yes",
+    "ref": "48",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "paving_stones",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1266736989,
+  "center": {
+    "lat": 37.5750355,
+    "lon": 126.9769668
+  },
+  "tags": {
+    "highway": "primary_link",
+    "lanes": "1",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1266736990,
+  "center": {
+    "lat": 37.5752354,
+    "lon": 126.9771741
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:right": "shared_lane",
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "세종대로",
+    "name:en": "Sejong-daero",
+    "name:ja": "世宗大路(セジョンデロ)",
+    "name:ko": "세종대로",
+    "name:zh": "世宗大路",
+    "oneway": "yes",
+    "ref": "48;31",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1266736991,
+  "center": {
+    "lat": 37.5751499,
+    "lon": 126.9769616
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "name": "사직로",
+    "name:en": "Sajik-ro",
+    "name:ja": "社稷路(サジクロ)",
+    "name:ko": "사직로",
+    "name:ko-Latn": "Sajingno",
+    "name:zh": "社稷路",
+    "oneway": "yes",
+    "ref": "48",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1482114517,
+  "center": {
+    "lat": 37.5702809,
+    "lon": 126.9800037
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "maxspeed": "60",
+    "name": "종로",
+    "name:en": "Jong-ro",
+    "name:ja": "鍾路(チョンノ)",
+    "name:ko": "종로",
+    "name:ko-Latn": "Jongno",
+    "name:zh": "钟路",
+    "oneway": "yes",
+    "ref": "6",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1506928764,
+  "center": {
+    "lat": 37.5757877,
+    "lon": 126.9797901
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "name": "율곡로",
+    "name:en": "Yulgok-ro",
+    "name:ja": "栗谷路(ユルゴクロ)",
+    "name:ko": "율곡로",
+    "oneway": "yes",
+    "ref": "50",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1532896484,
+  "center": {
+    "lat": 37.5759287,
+    "lon": 126.9797274
+  },
+  "tags": {
+    "bicycle": "designated",
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "name": "율곡로",
+    "name:en": "Yulgok-ro",
+    "name:ja": "栗谷路(ユルゴクロ)",
+    "name:ko": "율곡로",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+}
+
+  ]
+}
