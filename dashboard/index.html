@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>종로 기재율 지도</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -165,6 +168,41 @@
   .card dd b{ color:var(--ink); font-weight:600; }
   .card .foot{ margin:0; font-size:11.5px; line-height:1.55; color:var(--muted); }
   .card .mono{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; }
+  .charts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+  .chart{
+    margin:0; background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px 16px; display:flex; flex-direction:column; gap:12px; min-width:0;
+  }
+  .chart h3{ margin:0; font-size:15px; font-weight:600; line-height:1.45; color:var(--ink); }
+  .chart svg{ width:100%; height:auto; display:block; }
+  .chart svg text{ fill:var(--ink-2); font-size:12.5px; }
+  .chart svg .vl{ fill:var(--ink); font-size:14px; font-weight:600; }
+  .chart svg .vl.key{ fill:var(--accent); font-size:15px; font-weight:700; }
+  .chart svg .lab{ fill:var(--ink); font-size:13.5px; }
+  .chart svg .lab.key{ font-weight:700; }
+  .chart svg .big{ fill:var(--accent); font-size:26px; font-weight:700; }
+  .chart table.mini{ width:100%; border-collapse:collapse; font-size:12.5px; font-variant-numeric:tabular-nums; }
+  .chart table.mini th{ text-align:left; font-weight:500; color:var(--muted); padding:5px 6px 5px 0; border-bottom:1px solid var(--border); font-size:11.5px; }
+  .chart table.mini td{ padding:5px 6px 5px 0; border-bottom:1px solid var(--border); color:var(--ink-2); }
+  .chart table.mini th.n, .chart table.mini td.n{ text-align:right; padding-right:0; }
+  .chart table.mini tr.key td{ color:var(--ink); font-weight:600; }
+  .chart .foot{ margin:0; font-size:11.5px; line-height:1.6; color:var(--muted); }
+  @media (max-width:480px){
+    .chart{ padding:14px 12px 14px; }
+    .chart h3{ font-size:14px; }
+    .chart svg text{ font-size:16px; }
+    .chart svg .vl{ font-size:18px; }
+    .chart svg .vl.key{ font-size:19px; }
+    .chart svg .lab{ font-size:17px; }
+    .chart svg .big{ font-size:32px; }
+    .chart table.mini{ font-size:12px; }
+    .chart table.mini th{ font-size:11px; }
+  }
+  .thr{ display:flex; flex-direction:column; gap:6px; }
+  .thr .row{ display:grid; grid-template-columns:76px minmax(0,1fr) 44px; align-items:center; gap:8px; font-size:12px; color:var(--ink-2); }
+  .thr .bar{ height:8px; background:var(--grid); border-radius:4px; overflow:hidden; }
+  .thr .bar i{ display:block; height:100%; background:var(--accent); }
+  .thr .n{ text-align:right; font-family:"IBM Plex Mono", monospace; font-size:11.5px; font-variant-numeric:tabular-nums; }
 
   section{ display:flex; flex-direction:column; gap:14px; }
   .section-head h2{ font-size:20px; font-weight:600; margin:0 0 4px; }
@@ -381,8 +419,129 @@
         <p class="foot">서울도심에 해당하면 상업지역 용적률 단서가 걸린다. 도면을 도면으로 확인하기 전까지 임의 값을 넣지 않고 비워 둔다.</p>
       </article>
 
+      <article class="card key">
+        <div class="card-head"><span class="slot">칸 5</span><span class="what">6주차 · 경사·향 적합면적 비율</span></div>
+        <div class="big"><span class="v">39.2</span><span class="u">%</span></div>
+        <div class="thr" aria-label="경사 임계값별 적합면적 비율">
+          <div class="row"><span>하한 10%</span><span class="bar"><i style="width:39.2%"></i></span><span class="n">39.2</span></div>
+          <div class="row"><span>기준안 15%</span><span class="bar"><i style="width:39.2%"></i></span><span class="n">39.2</span></div>
+          <div class="row"><span>상한 25%</span><span class="bar"><i style="width:39.2%"></i></span><span class="n">39.2</span></div>
+        </div>
+        <dl>
+          <div><dt>값</dt><dd><b>39.2</b> (기준안 15%) · 하한 39.2 · 상한 39.2</dd></div>
+          <div><dt>단위</dt><dd>% · 대상지 면적 대비 적합면적 (122.31ha ÷ 311.85ha)</dd></div>
+          <div><dt>판정</dt><dd>경사 ≤ 임계값 <b>AND</b> 향 135~225° <b>AND</b> 표고 ≤ 기반시설 +50m, 90m 셀(0.81ha) 385개</dd></div>
+          <div><dt>출처</dt><dd><b>Copernicus DEM GLO-90</b> (Open-Meteo Elevation API, 정수 m) · 해상도 90m<br>
+            수업 지정 출처(국토지리정보원 DEM 90m)가 아님 · 대상지 행정경계 확인 <span class="mono">LT_C_ADSIDO_INFO</span></dd></div>
+          <div><dt>조회일</dt><dd>2026-10-12 · <span class="mono">scripts/calc_slope_aspect.ps1</span></dd></div>
+        </dl>
+        <p class="foot">반경 1 km 안은 평균 경사 3.1%로 거의 평지라 세 임계값에서 값이 같다. 경사 조건만 보면 99·100·100%이고, 값을 가르는 것은 향 조건이다.
+          기반시설 표고는 자료에 값이 없어 중심점 표고 38 m로 <b>가정</b>했고, DEM은 건물·수목 높이가 섞인 지표면 모델이다.</p>
+      </article>
+
     </div>
   </section>
+
+  <section id="indicator6">
+    <div class="section-head">
+      <h2>6주차 비교과 · 지표 ⑥ 차트 2종</h2>
+      <p>지표 ⑥(경사·향 적합면적)의 카탈로그 행 하나에서 막대(비교)와 도넛(구성)을 만들었다.
+        그래프 아래 표가 같은 값을 그대로 보여 주고, 각주에 출처와 조회일을 적었다. 막대는 세로축이 0에서 시작한다.</p>
+    </div>
+    <div class="charts">
+      <figure class="chart">
+        <h3>[비교] 경사 임계값 10·15·25%별 적합면적 (ha)</h3>
+        <div id="barSvg"></div>
+        <table class="mini" id="barTbl"></table>
+        <figcaption class="foot" id="barNote"></figcaption>
+      </figure>
+      <figure class="chart">
+        <h3>[구성] 대상지 면적 중 적합·비적합 비중 (%) — 경사 15% 기준안</h3>
+        <div id="donutSvg"></div>
+        <table class="mini" id="donutTbl"></table>
+        <figcaption class="foot" id="donutNote"></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <script>
+  (function(){
+    // 카탈로그 행 ⑥ — scripts/calc_slope_aspect.ps1 가 저장한 out/dem/slope_aspect_suitability.csv 의 값
+    const I6 = {
+      date: '2026-10-12', totalHa: 311.85, rowNo: '⑥',
+      rows: [
+        { k: '경사 10%', tag: '하한',   ha: 122.31, key: false },
+        { k: '경사 15%', tag: '기준안', ha: 122.31, key: true  },
+        { k: '경사 25%', tag: '상한',   ha: 122.31, key: false }
+      ]
+    };
+    const ha0 = v => Math.round(v).toLocaleString('ko-KR');
+    const pct1 = v => (Math.round(v * 10) / 10).toFixed(1);
+    const fitHa = I6.rows.find(r => r.key).ha;
+    const fitPct = fitHa / I6.totalHa * 100;
+    const noHa = I6.totalHa - fitHa;
+    const SRC = '출처: 지표 카탈로그 행 ' + I6.rowNo + ' · Copernicus DEM GLO-90(Open-Meteo Elevation API) 90m 셀 385개 · 조회일 ' + I6.date;
+    const ASSUME = '판정: 경사 ≤ 임계값 AND 향 135~225° AND 표고 ≤ 기반시설 +50m. 기반시설 표고는 중심점 38m로 가정.';
+
+    // ---- 막대: 세로축 0 시작, 균등 눈금 20ha ----
+    (function(){
+      const W = 360, H = 268, ml = 44, mr = 8, mt = 30, mb = 54;
+      const pw = W - ml - mr, ph = H - mt - mb;
+      const max = Math.ceil(Math.max.apply(null, I6.rows.map(r => r.ha)) / 20) * 20;
+      const y = v => mt + ph * (1 - v / max);
+      let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="경사 임계값 10·15·25%별 적합면적. ' +
+        I6.rows.map(r => r.k + ' ' + ha0(r.ha) + 'ha').join(', ') + '">';
+      s += '<text x="0" y="14">적합면적 (ha)</text>';
+      for (let t = 0; t <= max; t += 20) {
+        s += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y(t) + '" y2="' + y(t) + '" stroke="var(--grid)" stroke-width="1"/>';
+        s += '<text x="' + (ml - 6) + '" y="' + (y(t) + 4) + '" text-anchor="end">' + t + '</text>';
+      }
+      s += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y(0) + '" y2="' + y(0) + '" stroke="var(--ink-2)" stroke-width="1.5"/>';
+      const slot = pw / I6.rows.length, bw = 60;
+      I6.rows.forEach((r, i) => {
+        const x = ml + slot * i + (slot - bw) / 2, top = y(r.ha), cx = x + bw / 2;
+        s += '<rect x="' + x + '" y="' + top + '" width="' + bw + '" height="' + (y(0) - top) + '" fill="' + (r.key ? 'var(--accent)' : 'var(--muted)') + '"/>';
+        s += '<text class="vl' + (r.key ? ' key' : '') + '" x="' + cx + '" y="' + (top - 7) + '" text-anchor="middle">' + ha0(r.ha) + ' ha</text>';
+        s += '<text class="lab' + (r.key ? ' key' : '') + '" x="' + cx + '" y="' + (y(0) + 19) + '" text-anchor="middle">' + r.k + '</text>';
+        s += '<text class="lab' + (r.key ? ' key' : '') + '" x="' + cx + '" y="' + (y(0) + 36) + '" text-anchor="middle">(' + r.tag + ')</text>';
+      });
+      s += '</svg>';
+      document.getElementById('barSvg').innerHTML = s;
+      document.getElementById('barTbl').innerHTML =
+        '<thead><tr><th>임계값</th><th class="n">적합면적 (ha)</th><th class="n">비율 (%)</th><th class="n">조회일</th></tr></thead><tbody>' +
+        I6.rows.map(r => '<tr' + (r.key ? ' class="key"' : '') + '><td>' + r.k + ' (' + r.tag + ')</td><td class="n">' + ha0(r.ha) +
+          '</td><td class="n">' + pct1(r.ha / I6.totalHa * 100) + '</td><td class="n">' + I6.date + '</td></tr>').join('') + '</tbody>';
+      document.getElementById('barNote').innerHTML = SRC + '<br>' + ASSUME +
+        '<br>세 임계값에서 값이 같다 — 대상지 평균 경사가 3.1%라 경사 조건이 걸리지 않고, 값을 가르는 것은 향 조건이다. 강조색은 기준안 15% 하나. 원값 122.31 ha(CSV).';
+    })();
+
+    // ---- 도넛: 합계 100%, 조각 2개 ----
+    (function(){
+      const W = 360, H = 232, cx = 100, cy = 112, r = 74, sw = 30, C = 2 * Math.PI * r;
+      let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="대상지 면적 중 적합 ' + pct1(fitPct) + '%, 비적합 ' + pct1(100 - fitPct) + '%">';
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="var(--grid)" stroke-width="' + sw + '"/>';
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="var(--accent)" stroke-width="' + sw +
+        '" stroke-dasharray="' + (C * fitPct / 100) + ' ' + C + '" transform="rotate(-90 ' + cx + ' ' + cy + ')"/>';
+      s += '<text class="big" x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + pct1(fitPct) + '%</text>';
+      s += '<text x="' + cx + '" y="' + (cy + 24) + '" text-anchor="middle">적합</text>';
+      s += '<rect x="196" y="76" width="14" height="14" fill="var(--accent)"/>';
+      s += '<text class="lab key" x="218" y="88">적합 ' + pct1(fitPct) + '%</text>';
+      s += '<text x="218" y="105">' + ha0(fitHa) + ' ha</text>';
+      s += '<rect x="196" y="126" width="14" height="14" fill="var(--grid)" stroke="var(--muted)" stroke-width="1"/>';
+      s += '<text class="lab" x="218" y="138">비적합 ' + pct1(100 - fitPct) + '%</text>';
+      s += '<text x="218" y="155">' + ha0(noHa) + ' ha</text>';
+      s += '</svg>';
+      document.getElementById('donutSvg').innerHTML = s;
+      document.getElementById('donutTbl').innerHTML =
+        '<thead><tr><th>구분</th><th class="n">면적 (ha)</th><th class="n">비율 (%)</th><th class="n">조회일</th></tr></thead><tbody>' +
+        '<tr class="key"><td>적합 (기준안 15%)</td><td class="n">' + ha0(fitHa) + '</td><td class="n">' + pct1(fitPct) + '</td><td class="n">' + I6.date + '</td></tr>' +
+        '<tr><td>비적합</td><td class="n">' + ha0(noHa) + '</td><td class="n">' + pct1(100 - fitPct) + '</td><td class="n">' + I6.date + '</td></tr>' +
+        '<tr><td>대상지 합계</td><td class="n">' + ha0(I6.totalHa) + '</td><td class="n">100.0</td><td class="n">' + I6.date + '</td></tr></tbody>';
+      document.getElementById('donutNote').innerHTML = SRC + '<br>' + ASSUME +
+        '<br>합계 100%. 도넛은 한 시점의 구성만 보이며 시간 변화는 다루지 않는다. 원값 대상지 311.85 ha, 적합 122.31 ha(CSV).';
+    })();
+  })();
+  </script>
 
   <div id="app"><div class="loading">건물 데이터를 불러오는 중…</div></div>
 
