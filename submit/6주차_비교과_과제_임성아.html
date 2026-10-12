@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>6주차 비교과 과제 — 지표 ⑥ 차트가 오른 팀 화면</title>
+<style>
+  @page { size: A4; margin: 8mm 10mm; }
+  *{ box-sizing:border-box; }
+  body{
+    font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    color:#111; background:#fff; font-size:8.2pt; line-height:1.42; margin:0;
+  }
+  .mono{ font-family:Consolas,"D2Coding",monospace; font-size:.92em; }
+
+  header.doc{ border-bottom:2px solid #1b3f78; padding-bottom:6px; margin-bottom:8px; }
+  header.doc h1{ font-size:14.5pt; margin:0 0 3px; color:#1b3f78; letter-spacing:-.3px; }
+  header.doc .meta{ font-size:8.4pt; color:#444; }
+  .addr{
+    margin-top:5px; padding:5px 8px; background:#eef3fa; border-left:3px solid #1b3f78;
+    font-size:8.4pt; line-height:1.65;
+  }
+  .addr b{ color:#1b3f78; }
+  .addr .u{ font-family:Consolas,"D2Coding",monospace; }
+
+  h2{ font-size:10.2pt; margin:9px 0 3px; color:#1b3f78; border-left:4px solid #1b3f78; padding-left:6px; }
+  ul.done{ margin:0 0 3px; padding-left:15px; font-size:8pt; line-height:1.45; }
+  ul.done li{ margin-bottom:2px; }
+  ul.done b{ color:#1b3f78; }
+
+  .two{ display:flex; gap:9px; align-items:flex-start; }
+  .l-col{ flex:1 1 0; min-width:0; }
+  .r-col{ flex:0 0 49mm; }
+  figure{ margin:0 0 5px; }
+  figure img{ display:block; border:1px solid #c8cdd6; }
+  .l-col figure img{ width:92%; }
+  .r-col figure img{ width:100%; }
+  figcaption{ font-size:7.6pt; color:#555; margin-top:3px; line-height:1.45; }
+  figcaption b{ color:#111; }
+
+  table{ width:100%; border-collapse:collapse; font-size:7.6pt; margin-bottom:3px; }
+  th,td{ border:1px solid #c8cdd6; padding:2px 5px; vertical-align:top; text-align:left; }
+  th{ background:#e8edf5; color:#1b3f78; font-weight:600; }
+  td.c,th.c{ text-align:center; }
+  .ok{ color:#1b6b34; font-weight:700; }
+  .wait{ color:#9a6b12; font-weight:700; }
+
+  .key{ border:1px solid #d9c08a; background:#fdf8ec; padding:5px 8px; font-size:7.6pt; line-height:1.5; margin-top:4px; }
+  .key b{ color:#8a6413; }
+  .note{ font-size:7.6pt; color:#444; line-height:1.5; margin:2px 0 0; }
+</style>
+
+<header class="doc">
+  <h1>6주차 비교과 과제 — 지표 ⑥ 차트가 오른 팀 화면</h1>
+  <div class="meta">
+    스마트도시계획(캡스톤디자인) · 비교과 · 임성아 · 대상지 서울 종로구 일대 · 작성일 2026-10-12 · <b>조회일 2026-10-12</b>
+  </div>
+  <div class="addr">
+    <b>배포 주소(production)</b> <span class="u">https://gee6285-star.github.io/seonga-04/dashboard/</span>
+    &nbsp;·&nbsp; GitHub Pages가 <span class="mono">main</span> 브랜치를 그대로 배포<br>
+    <b>저장소 주소</b> <span class="u">https://github.com/gee6285-star/seonga-04</span> &nbsp;·&nbsp;
+    차트를 올린 커밋 <span class="u">2d60773</span> (main, 2026-10-12)
+  </div>
+</header>
+
+<h2>과제 ①–⑤ 수행 결과</h2>
+<ul class="done">
+  <li><b>① 차트 2종</b> — 막대(비교) 1개 <b>경사 임계값 10·15·25%별 적합면적(ha)</b>, 도넛(구성) 1개 <b>대상지 면적 중 적합·비적합 비중(%)</b>.
+    두 차트 모두 지표 카탈로그 <b>행 ⑥</b>(경사·향 적합면적)의 값에서 만들었다.</li>
+  <li><b>② 6개 요소</b> — 제목 · 세로축 <b>0 시작</b>(20 ha 균등 눈금) · 단위(ha, %) · 출처(행 ⑥ · Copernicus DEM GLO-90) · 조회일(2026-10-12) · 강조색 <b>기준안 15% 하나</b>.</li>
+  <li><b>③ 배포 반영</b> — <span class="mono">main</span>에 push한 뒤 production 주소에서 확인했다. 휴대전화 폭(375px)에서 가로 스크롤이 없고 그래프 글자는 화면 기준 12.7 px 이상이다(오른쪽 갈무리).
+    휴대전화에서 데스크톱 폭으로 줄어드는 문제가 있어 <span class="mono">viewport</span> 설정을 추가했다.</li>
+  <li><b>④ 상호 점검 5개</b>와 <b>⑤ 인증키 확인</b> — 아래 표와 한 줄 기록.</li>
+</ul>
+
+<div class="two">
+  <div class="l-col">
+    <h2>배포 화면 ① 데스크톱(폭 1100px)</h2>
+    <figure>
+      <img src="6주차_비교과_화면갈무리_데스크톱.png" alt="production 주소에서 찍은 막대 차트와 도넛 차트, 각 그래프 아래의 표">
+      <figcaption>왼쪽 <b>[비교] 막대</b>: 경사 10·15·25% 모두 122 ha, 기준안 15%만 파란색. 오른쪽 <b>[구성] 도넛</b>: 적합 39.2% · 비적합 60.8%(합계 100%).
+        그래프 <b>앞</b>에 그림, <b>아래</b>에 같은 값의 표(값·단위·조회일), 맨 아래 각주에 출처와 가정.</figcaption>
+    </figure>
+
+    <h2>상호 점검 5개 (거리 · 색 · 폭 · 값 · 출처)</h2>
+    <table>
+      <thead><tr><th class="c" style="width:9mm">점검</th><th class="c" style="width:13mm">결과</th><th>한 줄 기록</th></tr></thead>
+      <tbody>
+        <tr><td class="c">거리</td><td class="c wait">미확인</td><td>강의실 뒷줄에서 제목·축·값이 읽히는지는 팀원 확인 대기. 대신 휴대전화 폭에서 글자 12.7 px 이상임을 측정.</td></tr>
+        <tr><td class="c">색</td><td class="c ok">통과</td><td>강조색은 기준안 15% 막대 하나뿐, 나머지는 회색. 색이 없어도 "(기준안)" 라벨과 굵은 글씨로 구분.</td></tr>
+        <tr><td class="c">폭</td><td class="c ok">통과</td><td>375 px 폭에서 축 라벨이 겹치지 않고 막대가 유지되며 가로 스크롤 없음(production 주소에서 측정).</td></tr>
+        <tr><td class="c">값</td><td class="c ok">통과</td><td>막대 122 ha = 표 122 = CSV 122.31 ha(정수 표기로 통일), 비율 39.2%. 원값은 각주에 적음.</td></tr>
+        <tr><td class="c">출처</td><td class="c ok">통과</td><td>각주에 행 ⑥ · Copernicus DEM GLO-90 · 조회일 2026-10-12 · 수업 지정 DEM이 아니라는 점 · 기반시설 표고 가정(38 m) 명시.</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><b>미통과 항목: 거리</b> (팀원 확인 대기) · 팀 채팅 한 줄: "지표 ⑥ 막대·도넛 · 점검자 임성아 · 미통과 거리".</p>
+
+    <h2>인증키 확인 (1줄)</h2>
+    <p class="note"><span class="ok">통과</span> — 전체 커밋 기록과 올린 파일에서 키 형식 문자열 <b>0건</b>이고 코드에는 환경변수 이름 <span class="mono">VWORLD_KEY</span>만 있다. 요청 기록 파일에는 <span class="mono">key=***</span>로 가려 저장한다. (2026-10-12)</p>
+  </div>
+
+  <div class="r-col">
+    <h2>배포 화면 ② 휴대전화(375px)</h2>
+    <figure>
+      <img src="6주차_비교과_화면갈무리_휴대전화.png" alt="휴대전화 폭의 production 화면. 막대 차트, 표, 도넛 차트가 세로로 쌓여 있다">
+      <figcaption>같은 production 주소를 휴대전화 폭으로 본 화면. 차트 두 개가 세로로 쌓이고 표·각주까지 한 줄에 읽힌다.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<div class="key">
+  <b>읽을 때 주의</b> — 세 임계값(10·15·25%)에서 값이 같다. 대상지 평균 경사가 3.1%로 거의 평지라 경사 조건이 걸리지 않고, 값을 가르는 것은 향 조건이다.
+  DEM은 수업이 지정한 국토지리정보원 90m가 아니라 <b>Copernicus DEM GLO-90</b>(Open-Meteo Elevation API)이고, 기반시설 표고는 자료에 값이 없어 중심점 표고 <b>38 m로 가정</b>했다.
+  계산은 <span class="mono">scripts/calc_slope_aspect.ps1</span>, 값은 <span class="mono">out/dem/slope_aspect_suitability.csv</span>(조회일 2026-10-12).
+</div>
